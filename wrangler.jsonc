@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "drainman-inc",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-09-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": ".open-next/assets"
+  },
+  "observability": {
+    "enabled": true
+  }
+  // Secrets / vars (e.g. CONTACT_WEBHOOK_URL) are set in the Cloudflare
+  // dashboard (Workers > drainman-inc > Settings > Variables and Secrets),
+  // not committed here.
+}
