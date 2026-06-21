@@ -195,7 +195,20 @@ export function PlumberVsTechnician({
             ))}
           </ul>
 
-          {!compact && (
+          {/* The narrative payoff — the mirror of the left card's "…stops at the
+              fixture". Shown in both modes so the two cards stay balanced (no
+              empty void) and the contrast lands. The tools strip is the fuller
+              proof, kept for the roomier non-compact layout only. */}
+          {compact ? (
+            <p
+              className={cn(
+                "mt-6 border-t pt-4 text-sm font-mono uppercase tracking-[0.14em] text-blue",
+                onDark ? "border-white/15 text-signal" : "border-water-line",
+              )}
+            >
+              …keeps going down the main
+            </p>
+          ) : (
             <>
               <p
                 className={cn(

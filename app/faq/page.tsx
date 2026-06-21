@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Phone } from "lucide-react";
-import { Section, SectionHeading, buttonClasses } from "@/components/ui";
+import { Section, buttonClasses } from "@/components/ui";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { FaqAccordion, type FaqItem } from "@/components/faq/FaqAccordion";
 import { site } from "@/lib/site";
@@ -80,12 +80,20 @@ export default function FaqPage() {
   return (
     <>
       <Section tone="water" spacing="lg" containerWidth="narrow">
-        <SectionHeading
-          as="h1"
-          eyebrow="Good to know"
-          title="A few common questions"
-          description="The short answers most people ask before they call. Plumbing is rarely one-size-fits-all, so if your question is not here, we are happy to talk it through."
-        />
+        {/* Heading written inline (not via SectionHeading) so the display size +
+            ink color survive — see note on cn()/tailwind-merge in lib/utils.ts. */}
+        <div className="flex flex-col gap-3">
+          <span className="inline-flex items-center gap-2 font-mono text-eyebrow font-medium uppercase text-blue">
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-blue" />
+            Good to know
+          </span>
+          <h1 className="text-display-lg text-ink">A few common questions</h1>
+          <p className="max-w-2xl text-lead text-steel">
+            The short answers most people ask before they call. Plumbing is
+            rarely one-size-fits-all, so if your question is not here, we are
+            happy to talk it through.
+          </p>
+        </div>
 
         <div className="mt-10">
           <FaqAccordion items={faqs} />

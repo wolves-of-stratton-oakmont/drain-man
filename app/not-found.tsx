@@ -35,14 +35,22 @@ export default function NotFound() {
           line.
         </p>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link href="/" className={buttonClasses({ size: "lg" })}>
+        <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+          {/* text-white / text-ink restated: the lg size's custom text-lead
+              collides with the color class in cn() (see lib/utils.ts). */}
+          <Link
+            href="/"
+            className={buttonClasses({ size: "lg", className: "text-white" })}
+          >
             Back home
             <ArrowRight className="h-5 w-5" aria-hidden="true" />
           </Link>
           <a
             href={site.phone.href}
-            className={cn(buttonClasses({ variant: "secondary", size: "lg" }), "font-mono")}
+            className={cn(
+              buttonClasses({ variant: "secondary", size: "lg" }),
+              "font-mono text-ink",
+            )}
           >
             <Phone className="h-5 w-5" aria-hidden="true" />
             {site.phone.display}

@@ -23,7 +23,7 @@ export function ServicesCta() {
         <span className="absolute left-[18%] top-1/2 h-3 w-3 -translate-y-1/2 rounded-full bg-signal shadow-[0_0_0_4px_rgba(255,198,41,0.25)]" />
       </div>
 
-      <div className="relative flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+      <div className="relative flex flex-col items-start gap-8 lg:flex-row lg:items-center lg:justify-between">
         <div className="max-w-xl">
           <h2 className="text-h2 text-white">
             Backed up, flooding, or just not sure?
@@ -33,10 +33,14 @@ export function ServicesCta() {
             with our rates up front, not at the front door. No deposits, ever.
           </p>
         </div>
-        <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+        <div className="flex w-full shrink-0 flex-col gap-3 sm:w-auto sm:flex-row lg:flex-col">
           <Link
             href="/contact"
-            className={buttonClasses({ variant: "primary", size: "lg" })}
+            className={buttonClasses({
+              variant: "primary",
+              size: "lg",
+              className: "w-full whitespace-nowrap sm:w-auto",
+            })}
           >
             Book a service
             <ArrowRight className="h-5 w-5" aria-hidden />
@@ -46,7 +50,8 @@ export function ServicesCta() {
             className={buttonClasses({
               variant: "secondary",
               size: "lg",
-              className: "border-white/25 bg-transparent text-white hover:border-signal hover:text-signal",
+              className:
+                "w-full whitespace-nowrap border-white/25 bg-transparent text-white hover:border-signal hover:text-signal sm:w-auto",
             })}
           >
             <Phone className="h-5 w-5" aria-hidden />

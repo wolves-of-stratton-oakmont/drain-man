@@ -51,14 +51,15 @@ export function Header() {
       <div className="mx-auto flex h-16 w-full max-w-[var(--container-site)] items-center justify-between gap-4 px-5 md:h-20 md:px-8">
         <Link
           href="/"
-          className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+          className="shrink-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
           aria-label="Drainman INC — home"
         >
-          <Logo height={38} />
+          <Logo height={32} plate />
         </Link>
 
-        {/* Desktop nav */}
-        <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
+        {/* Desktop nav — switches at 820px (below that the full bar overflows;
+            the hamburger covers the tablet zone). */}
+        <nav aria-label="Primary" className="hidden items-center gap-1 min-[820px]:flex">
           {primaryNav.map((item) => {
             const active = isActive(item.href);
             return (
@@ -85,15 +86,18 @@ export function Header() {
         </nav>
 
         {/* Desktop actions: phone + primary CTA */}
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 min-[820px]:flex">
           <a
             href={site.phone.href}
-            className="inline-flex items-center gap-2 rounded-lg px-2 py-1 font-mono text-sm font-medium text-ink transition-colors hover:text-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+            className="inline-flex items-center gap-2 whitespace-nowrap rounded-lg px-2 py-1 font-mono text-sm font-medium text-ink transition-colors hover:text-blue focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
           >
-            <Phone className="h-4 w-4" aria-hidden="true" />
+            <Phone className="h-4 w-4 shrink-0" aria-hidden="true" />
             {site.phone.display}
           </a>
-          <Link href="/contact" className={buttonClasses({ size: "sm" })}>
+          <Link
+            href="/contact"
+            className={buttonClasses({ size: "sm", className: "whitespace-nowrap" })}
+          >
             Book a service
           </Link>
         </div>
@@ -101,7 +105,7 @@ export function Header() {
         {/* Mobile toggle */}
         <button
           type="button"
-          className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-ink hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal md:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-ink hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal min-[820px]:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -114,7 +118,7 @@ export function Header() {
       {/* Mobile menu + backdrop */}
       <div
         className={cn(
-          "fixed inset-0 top-16 z-40 md:hidden",
+          "fixed inset-0 top-16 z-40 md:top-20 min-[820px]:hidden",
           open ? "pointer-events-auto" : "pointer-events-none",
         )}
         aria-hidden={!open}

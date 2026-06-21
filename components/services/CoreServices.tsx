@@ -111,7 +111,7 @@ export function CoreServices() {
           <article
             key={s.id}
             id={s.id}
-            className="grid scroll-mt-28 items-center gap-8 md:gap-12 lg:grid-cols-2"
+            className="grid scroll-mt-28 items-start gap-8 md:gap-12 lg:grid-cols-2"
           >
             {/* Media */}
             <div className={imageFirst ? "lg:order-1" : "lg:order-2"}>

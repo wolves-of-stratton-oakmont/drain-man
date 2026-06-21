@@ -55,12 +55,16 @@ export function HeritageLine({ className }: { className?: string }) {
           <li key={beat.marker} className="relative grid grid-cols-[auto_1fr] gap-x-5 md:gap-x-8">
             {/* The spine column: pipe rule + locate-dot */}
             <div className="relative flex w-6 justify-center md:w-8" aria-hidden="true">
-              {/* pipe rule running through the column (not on the last beat) */}
+              {/*
+                Continuous pipe rule: starts at this dot's center and runs down
+                THROUGH the inter-beat gap (space-y-10/12) to the next dot, so the
+                drain line reads as one unbroken run. Not drawn under the last beat.
+              */}
               {!last && (
-                <span className="absolute top-1 left-1/2 h-full w-[3px] -translate-x-1/2 rounded-full bg-blue/25" />
+                <span className="absolute left-1/2 top-3 h-[calc(100%+2.5rem)] w-[3px] -translate-x-1/2 rounded-full bg-blue/25 md:h-[calc(100%+3rem)]" />
               )}
               {/* locate-dot: yellow head ringed in blue */}
-              <span className="relative z-10 mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-blue shadow-[var(--shadow-sm)]">
+              <span className="relative z-10 flex h-6 w-6 items-center justify-center rounded-full bg-blue shadow-[var(--shadow-sm)]">
                 <span className="h-2.5 w-2.5 rounded-full bg-signal" />
               </span>
             </div>

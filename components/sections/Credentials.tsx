@@ -77,24 +77,27 @@ export function Credentials({ tone = "white" }: CredentialsProps) {
             >
               <Icon className="h-6 w-6" aria-hidden="true" />
             </span>
+            {/* Reserve two lines so 1- and 2-line titles share a baseline and
+                the rows below stay aligned across all four cards. */}
             <h3
               className={cn(
-                "mt-5 text-h3",
+                "mt-5 flex min-h-[2.4em] items-start text-h3 leading-[1.15]",
                 onDark ? "text-white" : "text-ink",
               )}
             >
               {title}
             </h3>
-            {data && (
-              <p
-                className={cn(
-                  "mt-2 font-mono text-sm font-medium tracking-tight",
-                  onDark ? "text-signal" : "text-blue",
-                )}
-              >
-                #{data}
-              </p>
-            )}
+            {/* Always reserve the license-number row; cards without a number get
+                an invisible placeholder so every card's body text lines up. */}
+            <p
+              className={cn(
+                "mt-2 font-mono text-sm font-medium tracking-tight",
+                data ? (onDark ? "text-signal" : "text-blue") : "invisible",
+              )}
+              aria-hidden={data ? undefined : true}
+            >
+              {data ? `#${data}` : " "}
+            </p>
             <p
               className={cn(
                 "mt-2 text-sm leading-relaxed",

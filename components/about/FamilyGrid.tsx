@@ -37,13 +37,13 @@ const family: Person[] = [
   },
 ];
 
-function initials(name: string) {
-  return name
-    .split(" ")
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
+/**
+ * A single first initial keeps every monogram the same visual weight (one bold
+ * glyph), so the row reads as an intentional set of brand avatars rather than a
+ * grid of missing photos. Duplicate letters are fine — the name sits right below.
+ */
+function initial(name: string) {
+  return name.trim().charAt(0).toUpperCase();
 }
 
 export function FamilyGrid({ className }: { className?: string }) {
@@ -57,11 +57,17 @@ export function FamilyGrid({ className }: { className?: string }) {
       {family.map((person) => (
         <li key={person.name}>
           <Card variant="default" className="flex h-full flex-col gap-4">
+            {/*
+              Brand monogram, not a photo placeholder: a solid Drain-Blue disc
+              with a white initial and a small Signal-Yellow locate-dot — the same
+              "we found it" marker used on The Line — so it reads as intentional.
+            */}
             <span
               aria-hidden="true"
-              className="flex h-14 w-14 items-center justify-center rounded-full bg-blue/10 font-display text-h3 font-extrabold text-blue"
+              className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-blue font-display text-h3 font-extrabold leading-none text-white shadow-[var(--shadow-sm)]"
             >
-              {initials(person.name)}
+              {initial(person.name)}
+              <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-signal ring-2 ring-white" />
             </span>
             <div>
               <h3 className="text-h3 font-display font-extrabold tracking-[-0.01em] text-ink">

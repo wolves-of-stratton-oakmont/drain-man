@@ -378,7 +378,15 @@ export function BookingForm({ className }: BookingFormProps) {
       )}
 
       <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <Button type="submit" variant="primary" size="lg" disabled={submitting}>
+        {/* text-white + whitespace-nowrap guard the primary CTA against the
+            cn()/tailwind-merge font-size↔color collision (see lib/utils.ts). */}
+        <Button
+          type="submit"
+          variant="primary"
+          size="lg"
+          disabled={submitting}
+          className="w-full whitespace-nowrap text-white sm:w-auto"
+        >
           {submitting ? (
             <>
               <Loader2 className="h-5 w-5 animate-spin" aria-hidden="true" />

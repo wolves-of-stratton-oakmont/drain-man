@@ -32,14 +32,14 @@ export function TrustStrip() {
       <ul className="grid grid-cols-2 gap-x-6 gap-y-8 py-10 md:grid-cols-4 md:py-12">
         {items.map(({ icon: Icon, label, detail }) => (
           <li key={label} className="flex items-start gap-3">
-            <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue/10 text-blue">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue/10 text-blue">
               <Icon aria-hidden="true" className="h-5 w-5" />
             </span>
             <span className="flex flex-col">
-              <span className="font-display text-h3 font-bold leading-tight text-ink">
+              <span className="font-display text-lg font-bold leading-tight tracking-tight text-ink">
                 {label}
               </span>
-              <span className="text-sm text-steel">{detail}</span>
+              <span className="mt-1 text-sm leading-snug text-steel">{detail}</span>
             </span>
           </li>
         ))}

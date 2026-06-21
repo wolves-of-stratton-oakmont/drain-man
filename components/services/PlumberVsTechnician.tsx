@@ -29,7 +29,7 @@ const technicianWork = [
 
 export function PlumberVsTechnician() {
   return (
-    <div className="relative grid gap-8 md:gap-10 lg:grid-cols-2">
+    <div className="relative grid items-start gap-8 md:gap-10 lg:grid-cols-2">
       {/* The Line — vertical spine that splits the two roles. Decorative. */}
       <div
         aria-hidden
@@ -74,8 +74,8 @@ export function PlumberVsTechnician() {
             </li>
           ))}
         </ul>
-        <p className="mt-auto flex items-center gap-2 pt-2 font-display text-sm font-bold text-steel">
-          <ArrowDown className="h-4 w-4" aria-hidden />
+        <p className="mt-auto flex items-center gap-2 border-t border-water-line pt-4 font-display text-sm font-bold text-steel">
+          <ArrowDown className="h-4 w-4 shrink-0" aria-hidden />
           Then the trail goes underground.
         </p>
       </div>
@@ -106,7 +106,7 @@ export function PlumberVsTechnician() {
             </li>
           ))}
         </ul>
-        <div className="mt-auto flex flex-wrap items-center gap-2 pt-2">
+        <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-water-line pt-4">
           <Badge tone="blue">
             <Radar className="h-4 w-4" aria-hidden />
             That&apos;s us
