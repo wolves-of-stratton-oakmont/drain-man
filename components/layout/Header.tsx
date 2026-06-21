@@ -54,7 +54,7 @@ export function Header() {
           className="rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
           aria-label="Drainman INC — home"
         >
-          <Logo height={26} />
+          <Logo height={38} />
         </Link>
 
         {/* Desktop nav */}

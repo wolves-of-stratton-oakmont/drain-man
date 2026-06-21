@@ -21,7 +21,7 @@ All photos below are royalty-free from Pexels (Pexels License: free to use, no a
 |---|---|
 | `brand/enercare-logo.svg` | Official Enercare logo, enercare.ca — partner logo, used for booking. Do not alter or recolor. |
 | `brand/enercare-icon-192.png` | Official Enercare app icon, enercare.ca |
-| `brand/drain_man_logo_reference.png` | Original "DRAIN MAN" chrome wordmark from the old site (reference only — superseded by the SVG `Logo` component) |
+| `brand/drain-man-logo.png` | The Drain Man Inc's original "DRAIN MAN" chrome wordmark, carried over from drainmaninc.com — used in the site header and footer. |
 | `favicon.svg` / app icon | Custom "Drainman INC" mark |
 
 _The original drainmaninc.com photos are preserved under `/research/assets/` for reference._
