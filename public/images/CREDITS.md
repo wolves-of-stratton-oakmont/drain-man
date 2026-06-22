@@ -25,3 +25,10 @@ All photos below are royalty-free from Pexels (Pexels License: free to use, no a
 | `favicon.svg` / app icon | Custom "Drainman INC" mark |
 
 _The original drainmaninc.com photos are preserved under `/research/assets/` for reference._
+
+- hero-plumber.jpg — Pexels photo #6720533 (https://www.pexels.com/photo/6720533/), free to use under the Pexels license.
+- service-drains.jpg — Pexels photo #6419128 (https://www.pexels.com/photo/6419128/), Pexels license.
+- service-flood.jpg — Pexels photo #7937300 (https://www.pexels.com/photo/7937300/), Pexels license.
+- service-flushing.jpg — Pexels photo #7859953 (https://www.pexels.com/photo/7859953/), Pexels license.
+- compare-plumber.jpg — Pexels photo #16509869 (https://www.pexels.com/photo/16509869/), Pexels license.
+- compare-technician.jpg — Pexels photo #36842620 (https://www.pexels.com/photo/36842620/), Pexels license.

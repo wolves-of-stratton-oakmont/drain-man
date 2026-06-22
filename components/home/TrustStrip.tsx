@@ -1,49 +1,62 @@
-import { CalendarClock, Users, BadgeCheck, MapPin } from "lucide-react";
 import { Section } from "@/components/ui";
 import { site } from "@/lib/site";
 
 const items = [
   {
-    icon: CalendarClock,
-    label: `Since ${site.founded}`,
-    detail: "Over 50 years on the line",
+    eyebrow: "On the line since",
+    figure: site.founded,
+    detail: "Over 50 years tracing and clearing Toronto's drains — second-generation, family-owned.",
   },
   {
-    icon: Users,
-    label: "Family owned",
-    detail: "Now run by the second generation",
+    eyebrow: "Family owned",
+    figure: "2nd gen",
+    detail: "Still run by the family that started it — the name on the truck answers the phone.",
   },
   {
-    icon: BadgeCheck,
-    label: `Licensed #${site.licenses.master}`,
-    detail: "Master plumbing & drain license",
+    eyebrow: "Master license",
+    figure: `#${site.licenses.master}`,
+    detail: "Fully licensed and insured for master plumbing and drain work.",
   },
   {
-    icon: MapPin,
-    label: "Toronto & the GTA",
-    detail: "Scarborough, Brampton, Mississauga",
+    eyebrow: "Service area",
+    figure: "GTA",
+    detail: "Toronto and across the GTA — Scarborough, Brampton, Mississauga and beyond.",
   },
 ];
 
-/** Thin band of four scannable trust signals — true credentials, not filler. */
+/**
+ * Trust figures — four credentials set as large display numerals with a mono
+ * eyebrow and a short line of context, divided by hairline rules. No icons: the
+ * numbers carry the weight, the dividers do the structuring.
+ */
 export function TrustStrip() {
   return (
     <Section tone="white" spacing="none" className="border-b border-water-line">
-      <ul className="grid grid-cols-2 gap-x-6 gap-y-8 py-10 md:grid-cols-4 md:py-12">
-        {items.map(({ icon: Icon, label, detail }) => (
-          <li key={label} className="flex items-start gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue/10 text-blue">
-              <Icon aria-hidden="true" className="h-5 w-5" />
-            </span>
-            <span className="flex flex-col">
-              <span className="font-display text-lg font-bold leading-tight tracking-tight text-ink">
-                {label}
-              </span>
-              <span className="mt-1 text-sm leading-snug text-steel">{detail}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
+      <div className="py-12 md:py-16">
+        <dl className="grid grid-cols-1 gap-y-10 border-t border-water-line sm:grid-cols-2 sm:gap-y-12 lg:grid-cols-4">
+          {items.map(({ eyebrow, figure, detail }) => (
+            <div
+              key={eyebrow}
+              className="flex flex-col pt-8 sm:px-7 sm:border-l sm:[&:nth-child(odd)]:border-l-0 lg:px-8 lg:[&:nth-child(odd)]:border-l lg:[&:first-child]:border-l-0"
+            >
+              <dt className="font-mono text-eyebrow font-medium uppercase tracking-[0.18em] text-accent">
+                {eyebrow}
+              </dt>
+              <dd className="mt-3 whitespace-nowrap font-display text-[clamp(1.875rem,2.4vw,2.5rem)] font-extrabold leading-none tracking-[-0.02em] text-ink">
+                {figure}
+              </dd>
+              <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-steel">
+                {detail}
+              </p>
+            </div>
+          ))}
+        </dl>
+
+        <p className="mt-10 text-xs text-steel/80">
+          Licensed master plumbing &amp; drain contractor · serving Toronto &amp; the
+          GTA since {site.founded}.
+        </p>
+      </div>
     </Section>
   );
 }

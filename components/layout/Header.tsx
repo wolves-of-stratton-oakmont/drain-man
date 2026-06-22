@@ -54,7 +54,7 @@ export function Header() {
           className="shrink-0 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
           aria-label="Drainman INC — home"
         >
-          <Logo height={32} plate />
+          <Logo height={32} />
         </Link>
 
         {/* Desktop nav — switches at 820px (below that the full bar overflows;

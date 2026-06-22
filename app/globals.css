@@ -6,15 +6,44 @@
    ============================================================================ */
 
 @theme {
-  /* -- Color (6 brand + derived) -- */
-  --color-blue: #0e63e6; /* Drain Blue — primary */
-  --color-blue-deep: #0a4fc0; /* pressed/hover */
-  --color-ink: #0a1a3f; /* Deep Main — headings, dark bands, replaces black */
+  /* ==========================================================================
+     BRAND THEME SYSTEM — two knobs drive every color on the site.
+
+       1. --color-accent  The primary brand hue. Buttons, links, highlights,
+                           dark-surface undertone, canvas wash — all derive
+                           from it. Set it to anything.
+
+       2. --accent-bleed  How strongly that hue seeps into the NEUTRALS (the
+                           dark "ink" surfaces + the grey secondary text).
+                           0% = pure neutral greys (accent only on accents);
+                           higher = the whole UI, including the footer & dark
+                           bands, visibly shares the brand hue. ~14% reads as
+                           a tasteful branded near-black.
+
+     Everything below is DERIVED via color-mix. Don't hardcode hex in
+     components — compose from these tokens so the two knobs stay in control.
+     ========================================================================== */
+  --color-accent: #d92027; /* knob 1 — brand hue */
+  --accent-bleed: 14%; /* knob 2 — accent → neutral bleed */
+
+  /* -- Accent ramp (the brand hue + its shades) -- */
+  --color-accent-deep: color-mix(in oklab, var(--color-accent), black 20%); /* pressed/hover */
+  --color-accent-tint: color-mix(in oklab, var(--color-accent) 6%, white); /* tinted off-white canvas */
+  --color-accent-line: color-mix(in oklab, var(--color-accent) 16%, white); /* hairline borders on light surfaces */
+
+  /* -- Neutral ramp (dark surfaces + greys, carrying the accent undertone) -- */
+  --color-ink: color-mix(in oklab, var(--color-accent) var(--accent-bleed), #0b0d14); /* Deep Main — headings, dark bands/footer, replaces black */
+  --color-steel: color-mix(in oklab, var(--color-accent) calc(var(--accent-bleed) - 4%), #6b7280); /* Pipe Steel — secondary text, borders */
+
+  /* -- Legacy accent aliases — resolve to the accent ramp above -- */
+  --color-blue: var(--color-accent); /* primary */
+  --color-blue-deep: var(--color-accent-deep); /* pressed/hover */
+  --color-water: var(--color-accent-tint); /* tinted off-white canvas */
+  --color-water-line: var(--color-accent-line); /* hairline borders on light surfaces */
+
+  /* -- Fixed brand colors (semantic, independent of the accent) -- */
   --color-signal: #ffc629; /* Signal Yellow — utility-marking warm pop */
   --color-alert: #e11d2a; /* Alert Red — emergency only + Enercare harmony */
-  --color-steel: #5b6b82; /* Pipe Steel — secondary text, borders */
-  --color-water: #f4f8ff; /* Clean Water — tinted off-white canvas */
-  --color-water-line: #dce7fa; /* hairline borders on light surfaces */
   --color-white: #ffffff;
 
   /* -- Fonts (wired in layout.tsx via next/font) -- */
@@ -49,7 +78,9 @@
   /* -- Shadow -- */
   --shadow-sm: 0 1px 2px rgba(10, 26, 63, 0.06);
   --shadow-md: 0 8px 24px rgba(10, 26, 63, 0.1);
-  --shadow-blue: 0 10px 30px rgba(14, 99, 230, 0.28);
+  /* Accent glow — follows the accent knob */
+  --shadow-accent: 0 10px 30px color-mix(in oklab, var(--color-accent) 30%, transparent);
+  --shadow-blue: var(--shadow-accent); /* legacy alias */
 
   /* -- Layout -- */
   --container-site: 75rem; /* 1200px */

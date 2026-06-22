@@ -12,7 +12,7 @@ import { site } from "@/lib/site";
 import { CommonJobs } from "@/components/services/CommonJobs";
 import { CoreServices } from "@/components/services/CoreServices";
 import { PlumberVsTechnician } from "@/components/services/PlumberVsTechnician";
-import { ServicesCta } from "@/components/services/ServicesCta";
+import { BookCta } from "@/components/sections/BookCta";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -121,10 +121,8 @@ export default function ServicesPage() {
         </div>
       </Section>
 
-      {/* ── Closing CTA ── */}
-      <Section tone="white" spacing="lg">
-        <ServicesCta />
-      </Section>
+      {/* ── Closing CTA (shared, site-wide) ── */}
+      <BookCta />
     </>
   );
 }

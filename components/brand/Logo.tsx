@@ -1,48 +1,42 @@
 import * as React from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export interface LogoProps extends React.HTMLAttributes<HTMLSpanElement> {
   /** Rendered height in px; width scales with the logo's aspect ratio. */
   height?: number;
-  /**
-   * Sit the chrome wordmark on a dark "equipment plate" so it stays legible on
-   * light surfaces (the header). The chrome PNG is built for dark backgrounds —
-   * on white it nearly disappears — so on light chrome we set it on a small ink
-   * plate (true to the brand's stamped-signage vocabulary). On already-dark
-   * surfaces (the footer) leave this off and the logo sits bare.
-   */
-  plate?: boolean;
 }
 
 /**
- * The Drain Man Inc's original brand logo — the chrome "DRAIN MAN" wordmark,
- * carried over verbatim from drainmaninc.com (transparent PNG, intrinsic
- * 361×136). Used in the header (top-left) and the footer.
+ * The Drain Man Inc wordmark. The PNG is used as a CSS mask over a solid fill,
+ * so the logo simply takes on `currentColor` — it inherits the site accent by
+ * default and can be flipped to any color by setting text color on the element
+ * (e.g. `text-white` on the dark footer). Change the accent, the logo follows.
  */
-const LOGO_W = 361;
-const LOGO_H = 136;
+const LOGO_W = 879;
+const LOGO_H = 165;
+const LOGO_SRC = "/brand/drain-man-logo.png";
 
-export function Logo({ height = 38, plate = false, className, ...props }: LogoProps) {
+export function Logo({ height = 32, className, style, ...props }: LogoProps) {
   const width = Math.round((height * LOGO_W) / LOGO_H);
   return (
     <span
-      className={cn(
-        "inline-flex items-center leading-none",
-        plate &&
-          "rounded-xl bg-ink px-3 py-2 shadow-[var(--shadow-sm)] ring-1 ring-ink/10",
-        className,
-      )}
+      role="img"
+      aria-label="The Drain Man Inc"
+      className={cn("inline-block bg-current align-middle text-accent", className)}
+      style={{
+        height,
+        width,
+        WebkitMaskImage: `url(${LOGO_SRC})`,
+        maskImage: `url(${LOGO_SRC})`,
+        WebkitMaskRepeat: "no-repeat",
+        maskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+        maskPosition: "center",
+        WebkitMaskSize: "contain",
+        maskSize: "contain",
+        ...style,
+      }}
       {...props}
-    >
-      <Image
-        src="/brand/drain-man-logo.png"
-        alt="The Drain Man Inc"
-        width={width}
-        height={height}
-        sizes={`${width}px`}
-        style={{ height, width }}
-      />
-    </span>
+    />
   );
 }

@@ -13,7 +13,7 @@ export function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1.2fr]">
           {/* Brand + blurb */}
           <div>
-            <Logo height={40} />
+            <Logo height={40} className="text-white" />
             <p className="mt-4 max-w-sm text-base leading-relaxed text-white/70">
               Family-owned Toronto drain specialists since {site.founded}. We clear
               blocked drains, stop basement floods, and run the camera down the main

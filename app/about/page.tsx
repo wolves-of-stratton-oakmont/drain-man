@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Section, SectionHeading } from "@/components/ui";
 import { Credentials } from "@/components/sections/Credentials";
-import { CtaBand } from "@/components/sections/CtaBand";
+import { BookCta } from "@/components/sections/BookCta";
 import { AboutHero } from "@/components/about/AboutHero";
 import { HeritageLine } from "@/components/about/HeritageLine";
 import { HeritageQuote } from "@/components/about/HeritageQuote";
@@ -76,10 +76,7 @@ export default function AboutPage() {
       <Credentials tone="white" />
 
       {/* Closing CTA (shared) */}
-      <CtaBand
-        title="Got a drain that won’t cooperate?"
-        subtitle="Tell us what’s going on and we’ll call you back to sort it out — no deposit, rates up front."
-      />
+      <BookCta />
     </>
   );
 }

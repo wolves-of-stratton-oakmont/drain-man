@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Phone } from "lucide-react";
 import { Section, buttonClasses } from "@/components/ui";
-import { CtaBand } from "@/components/sections/CtaBand";
+import { BookCta } from "@/components/sections/BookCta";
 import { FaqAccordion, type FaqItem } from "@/components/faq/FaqAccordion";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
@@ -135,10 +135,7 @@ export default function FaqPage() {
         </div>
       </Section>
 
-      <CtaBand
-        title="Got a drain that won't behave?"
-        subtitle="Tell us what's happening and we'll call you back to set a time — fair price up front, and no deposit."
-      />
+      <BookCta />
     </>
   );
 }

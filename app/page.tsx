@@ -5,7 +5,7 @@ import { TrustStrip } from "@/components/home/TrustStrip";
 import { ServicesSnapshot } from "@/components/home/ServicesSnapshot";
 import { PlumberVsTechnician } from "@/components/sections/PlumberVsTechnician";
 import { HeritageTeaser } from "@/components/home/HeritageTeaser";
-import { CtaBand } from "@/components/sections/CtaBand";
+import { BookCta } from "@/components/sections/BookCta";
 
 // Home uses the layout's default title ("Drainman INC"); set the description here.
 export const metadata: Metadata = {
@@ -36,10 +36,7 @@ export default function HomePage() {
       <HeritageTeaser />
 
       {/* 7 — Final CTA → /contact (booking form lives there) */}
-      <CtaBand
-        title="Backed up, leaking, or flooding?"
-        subtitle="Send a booking request and we'll call you back to confirm a time — no deposit, and your rate up front."
-      />
+      <BookCta />
     </>
   );
 }
