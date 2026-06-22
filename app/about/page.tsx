@@ -19,9 +19,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero — the thesis: the man they called the Drain Man */}
-      <Section tone="white" spacing="lg">
-        <AboutHero />
-      </Section>
+      <AboutHero />
 
       {/* The heritage, threaded on "The Line" — a true, ordered arc */}
       <Section tone="water" spacing="lg">

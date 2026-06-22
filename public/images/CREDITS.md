@@ -32,3 +32,12 @@ _The original drainmaninc.com photos are preserved under `/research/assets/` for
 - service-flushing.jpg — Pexels photo #7859953 (https://www.pexels.com/photo/7859953/), Pexels license.
 - compare-plumber.jpg — Pexels photo #16509869 (https://www.pexels.com/photo/16509869/), Pexels license.
 - compare-technician.jpg — Pexels photo #36842620 (https://www.pexels.com/photo/36842620/), Pexels license.
+- services/services-hero.jpg — Pexels photo #14664521 (https://www.pexels.com/photo/14664521/), Pexels license.
+- services/jobs/job-toilet.jpg — Pexels photo #7545637 (https://www.pexels.com/photo/7545637/), Pexels license.
+- services/jobs/job-sink.jpg — Pexels photo #6256 (https://www.pexels.com/photo/6256/), Pexels license.
+- services/jobs/job-drains.jpg — Pexels photo #13961561 (https://www.pexels.com/photo/13961561/), Pexels license.
+- services/jobs/job-repiping.jpg — Pexels photo #28169591 (https://www.pexels.com/photo/28169591/), Pexels license.
+- services/jobs/job-leaks.jpg — Pexels photo #18274115 (https://www.pexels.com/photo/18274115/), Pexels license.
+- services/jobs/job-fixtures.jpg — Pexels photo #7579012 (https://www.pexels.com/photo/7579012/), Pexels license.
+- about/about-hero.jpg — Pexels photo #162631 (https://www.pexels.com/photo/162631/), Pexels license.
+- about/values-handshake.jpg — Pexels photo #7964468 (https://www.pexels.com/photo/7964468/), Pexels license.

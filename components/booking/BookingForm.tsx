@@ -1,13 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { CheckCircle2, ChevronDown, Loader2, Phone } from "lucide-react";
-import { Button, Input, Label, Textarea, fieldBase } from "@/components/ui";
+import { CheckCircle2, Loader2, Phone } from "lucide-react";
+import { Button, Input, Label, Textarea } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 import {
-  SERVICE_OPTIONS,
-  TIMING_OPTIONS,
   validateContact,
   validateField,
   type ContactErrors,
@@ -29,15 +27,7 @@ const EMPTY: ContactPayload = {
 };
 
 /** Order errors get focused/announced in — matches reading order. */
-const FIELD_ORDER: FieldName[] = [
-  "name",
-  "phone",
-  "email",
-  "service",
-  "city",
-  "timing",
-  "message",
-];
+const FIELD_ORDER: FieldName[] = ["name", "phone", "email", "message"];
 
 export interface BookingFormProps {
   className?: string;
@@ -86,15 +76,7 @@ export function BookingForm({ className }: BookingFormProps) {
 
     const nextErrors = validateContact(values);
     setErrors(nextErrors);
-    setTouched({
-      name: true,
-      phone: true,
-      email: true,
-      service: true,
-      city: true,
-      timing: true,
-      message: true,
-    });
+    setTouched({ name: true, phone: true, email: true, message: true });
 
     const firstBad = FIELD_ORDER.find((f) => nextErrors[f]);
     if (firstBad) {
@@ -223,7 +205,7 @@ export function BookingForm({ className }: BookingFormProps) {
           />
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <Field
             id="name"
             label="Name"
@@ -263,85 +245,27 @@ export function BookingForm({ className }: BookingFormProps) {
               {...invalidProps("phone", touched, errors)}
             />
           </Field>
-        </div>
 
-        <Field
-          id="email"
-          label="Email"
-          required
-          error={touched.email ? errors.email : undefined}
-        >
-          <Input
+          <Field
             id="email"
-            name="email"
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            placeholder="you@email.com"
-            value={values.email}
-            onChange={(e) => setField("email", e.target.value)}
-            onBlur={() => handleBlur("email")}
-            aria-required="true"
-            {...invalidProps("email", touched, errors)}
-          />
-        </Field>
-
-        <div className="grid gap-5 sm:grid-cols-2">
-          <Field
-            id="service"
-            label="What do you need help with?"
-            required
-            error={touched.service ? errors.service : undefined}
-          >
-            <SelectField
-              id="service"
-              name="service"
-              value={values.service}
-              onChange={(e) => setField("service", e.target.value)}
-              onBlur={() => handleBlur("service")}
-              aria-required="true"
-              placeholder="Choose a service"
-              options={SERVICE_OPTIONS}
-              {...invalidProps("service", touched, errors)}
-            />
-          </Field>
-
-          <Field
-            id="city"
-            label="City / area"
+            label="Email"
             hint="Optional"
-            error={touched.city ? errors.city : undefined}
+            error={touched.email ? errors.email : undefined}
           >
             <Input
-              id="city"
-              name="city"
-              autoComplete="address-level2"
-              placeholder="e.g. Scarborough"
-              value={values.city}
-              onChange={(e) => setField("city", e.target.value)}
-              onBlur={() => handleBlur("city")}
-              {...invalidProps("city", touched, errors)}
+              id="email"
+              name="email"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              placeholder="you@email.com"
+              value={values.email}
+              onChange={(e) => setField("email", e.target.value)}
+              onBlur={() => handleBlur("email")}
+              {...invalidProps("email", touched, errors)}
             />
           </Field>
         </div>
-
-        <Field
-          id="timing"
-          label="Best time to call back"
-          hint="Optional"
-          error={touched.timing ? errors.timing : undefined}
-        >
-          <SelectField
-            id="timing"
-            name="timing"
-            value={values.timing}
-            onChange={(e) => setField("timing", e.target.value)}
-            onBlur={() => handleBlur("timing")}
-            placeholder="Any time is fine"
-            options={TIMING_OPTIONS}
-            {...invalidProps("timing", touched, errors)}
-          />
-        </Field>
 
         <Field
           id="message"
@@ -353,8 +277,8 @@ export function BookingForm({ className }: BookingFormProps) {
           <Textarea
             id="message"
             name="message"
-            rows={5}
-            placeholder="e.g. The basement floor drain backs up when we run the laundry. House was built in the 1960s."
+            rows={4}
+            placeholder="e.g. The basement floor drain backs up when we run the laundry."
             value={values.message}
             onChange={(e) => setField("message", e.target.value)}
             onBlur={() => handleBlur("message")}
@@ -458,45 +382,3 @@ function Field({
     </div>
   );
 }
-
-interface SelectFieldProps
-  extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  options: readonly string[];
-  placeholder: string;
-}
-
-/** Native select styled to match the Input primitive (uses shared `fieldBase`). */
-const SelectField = React.forwardRef<HTMLSelectElement, SelectFieldProps>(
-  ({ className, options, placeholder, value, ...props }, ref) => {
-    return (
-      <div className="relative">
-        <select
-          ref={ref}
-          value={value}
-          className={cn(
-            fieldBase,
-            "h-12 appearance-none pr-11",
-            // Grey out the placeholder option until a real choice is made.
-            !value && "text-steel/70",
-            className,
-          )}
-          {...props}
-        >
-          <option value="" disabled>
-            {placeholder}
-          </option>
-          {options.map((opt) => (
-            <option key={opt} value={opt} className="text-ink">
-              {opt}
-            </option>
-          ))}
-        </select>
-        <ChevronDown
-          className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-steel"
-          aria-hidden="true"
-        />
-      </div>
-    );
-  },
-);
-SelectField.displayName = "SelectField";

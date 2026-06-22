@@ -5,7 +5,7 @@ import { Section, Container, Badge } from "@/components/ui";
 import { BookingForm } from "@/components/booking/BookingForm";
 import { ContactRail } from "@/components/contact/ContactRail";
 import { ContactMap } from "@/components/contact/ContactMap";
-import { EnercarePlan } from "@/components/contact/EnercarePlan";
+import { EnercareBand } from "@/components/sections/EnercareBand";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -67,55 +67,34 @@ export default function ContactPage() {
         </Container>
       </Section>
 
-      {/* ── Primary action: booking form + direct-contact rail ─────────── */}
+      {/* ── Primary action: full-width booking form ─────────────────────── */}
       <Section tone="white" spacing="lg">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
-          {/* Booking form — the primary action */}
-          <div>
-            <span className="inline-flex items-center gap-2 font-mono text-eyebrow font-medium uppercase tracking-[0.18em] text-blue">
-              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-blue" />
-              Request a callback
-            </span>
-            <h2 className="mt-3 text-h2 text-ink">Tell us what&apos;s wrong</h2>
-            <p className="mt-3 max-w-[60ch] text-lead text-steel">
-              The more you tell us about the problem, the faster we can send the
-              right person and the right tools. We&apos;ll call you back to
-              confirm — no deposit, no obligation.
-            </p>
-            <BookingForm className="mt-8" />
-          </div>
-
-          {/* Direct contact rail */}
-          <aside className="lg:pt-2">
-            <span className="inline-flex items-center gap-2 font-mono text-eyebrow font-medium uppercase tracking-[0.18em] text-blue">
-              <span aria-hidden="true" className="h-2 w-2 rounded-full bg-blue" />
-              Reach us directly
-            </span>
-            <h2 className="mt-3 text-h2 text-ink">Prefer to call?</h2>
-            <p className="mt-3 text-lead text-steel">
-              We pick up the phone. Here&apos;s every way to reach the shop.
-            </p>
-            <ContactRail className="mt-8" />
-          </aside>
-        </div>
-      </Section>
-
-      {/* ── Enercare partner plan — protected partner channel ──────────── */}
-      <Section tone="water" spacing="md">
-        <div className="mb-8 flex flex-col gap-3">
-          <span className="inline-flex items-center gap-2 font-mono text-eyebrow font-medium uppercase tracking-[0.18em] text-blue">
-            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-blue" />
-            Protection plan
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="inline-flex items-center gap-2 font-mono text-eyebrow font-medium uppercase tracking-[0.18em] text-accent">
+            <span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent" />
+            Request a callback
           </span>
-          <h2 className="text-h2 text-ink">Covered through Enercare</h2>
-          <p className="max-w-2xl text-lead text-steel">
-            For ongoing peace of mind, our work pairs with Enercare&apos;s
-            Plumbing and Drains Protection Plan. View the plan and sign up
-            directly with Enercare.
+          <h2 className="mt-3 text-h2 text-ink">Tell us what&apos;s wrong</h2>
+          <p className="mx-auto mt-3 max-w-[55ch] text-lead text-steel">
+            Three quick fields and you&apos;re done — we&apos;ll call you back to
+            confirm a time. No deposit, no obligation.
           </p>
         </div>
-        <EnercarePlan />
+        <BookingForm className="mt-10" />
+
+        {/* Prefer to call? — direct-contact info, same white section as the form */}
+        <div className="mt-16 border-t border-water-line pt-12">
+          <div className="text-center">
+            <h2 className="text-h3 font-display font-bold text-ink">
+              Prefer to call? Here&apos;s every way to reach us.
+            </h2>
+          </div>
+          <ContactRail className="mt-8" />
+        </div>
       </Section>
+
+      {/* ── Enercare partner — shared red panel used everywhere we mention it ── */}
+      <EnercareBand variant="hero" />
 
       {/* ── Service area + map ─────────────────────────────────────────── */}
       <Section tone="white" spacing="lg">

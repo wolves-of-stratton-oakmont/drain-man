@@ -23,7 +23,7 @@
      Everything below is DERIVED via color-mix. Don't hardcode hex in
      components — compose from these tokens so the two knobs stay in control.
      ========================================================================== */
-  --color-accent: #d92027; /* knob 1 — brand hue */
+  --color-accent: #0e63e6; /* knob 1 — brand hue */
   --accent-bleed: 14%; /* knob 2 — accent → neutral bleed */
 
   /* -- Accent ramp (the brand hue + its shades) -- */

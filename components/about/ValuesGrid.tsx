@@ -1,37 +1,29 @@
 import * as React from "react";
-import { Handshake, Receipt, CircleDollarSign, HeartHandshake } from "lucide-react";
-import { Card } from "@/components/ui";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * The real differentiators from SITE_SPEC, as scannable value cards rather
- * than buried paragraphs. Copy stays close to the client's own wording.
+ * "The rules Bill started with." Real differentiators from SITE_SPEC, set as a
+ * numbered manifesto beside one honest image — numbering is earned here because
+ * the copy frames these as an ordered set of rules, not decoration.
  */
 
-type Value = {
-  icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
-  title: string;
-  body: string;
-};
+type Value = { title: string; body: string };
 
 const values: Value[] = [
   {
-    icon: Handshake,
     title: "Services, not sales",
     body: "We won’t mislead you to win the job. We find the fix you actually need and tell it to you straight.",
   },
   {
-    icon: Receipt,
     title: "Rates up front",
     body: "You hear the price before we start — not a surprise at the front door once the truck is in your driveway.",
   },
   {
-    icon: CircleDollarSign,
     title: "No deposits",
     body: "An honest company shouldn’t need your money first. You pay once we’ve delivered the work we promised.",
   },
   {
-    icon: HeartHandshake,
     title: "Earned by referral",
     body: "We spend on quality work, not advertising. Customers and contractors send us the next job, and that keeps prices fair.",
   },
@@ -39,25 +31,45 @@ const values: Value[] = [
 
 export function ValuesGrid({ className }: { className?: string }) {
   return (
-    <ul className={cn("grid grid-cols-1 gap-6 sm:grid-cols-2", className)}>
-      {values.map(({ icon: Icon, title, body }) => (
-        <li key={title}>
-          <Card variant="default" className="flex h-full items-start gap-4">
+    <div
+      className={cn(
+        "grid items-center gap-10 lg:grid-cols-2 lg:gap-16",
+        className,
+      )}
+    >
+      {/* One honest image — a handshake, not a stock value icon */}
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-[var(--shadow-md)] ring-1 ring-water-line lg:aspect-[4/5]">
+        <Image
+          src="/images/about/values-handshake.jpg"
+          alt="Two people shaking hands on an agreement"
+          fill
+          sizes="(max-width: 1024px) 100vw, 45vw"
+          className="object-cover"
+        />
+      </div>
+
+      {/* The rules — numbered, divided by hairlines */}
+      <ol className="flex flex-col">
+        {values.map(({ title, body }, i) => (
+          <li
+            key={title}
+            className="flex gap-5 border-t border-water-line py-6 first:border-t-0 first:pt-0 last:pb-0"
+          >
             <span
               aria-hidden="true"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue/10 text-blue"
+              className="font-mono text-lg font-semibold leading-none text-accent"
             >
-              <Icon className="h-5 w-5" aria-hidden />
+              {String(i + 1).padStart(2, "0")}
             </span>
             <div>
               <h3 className="text-h3 font-display font-extrabold tracking-[-0.01em] text-ink">
                 {title}
               </h3>
-              <p className="mt-1.5 text-base leading-relaxed text-ink/80">{body}</p>
+              <p className="mt-1.5 text-base leading-relaxed text-steel">{body}</p>
             </div>
-          </Card>
-        </li>
-      ))}
-    </ul>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }

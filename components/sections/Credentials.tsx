@@ -58,12 +58,15 @@ export function Credentials({ tone = "white" }: CredentialsProps) {
         description="Honest work has paperwork to back it. Here's what stands behind every job we do."
       />
 
-      <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {items.map(({ icon: Icon, title, body, data }) => (
+      {/* Staggered grid — every other card drops a step so the row reads as a
+          dynamic, offset rhythm rather than a flat strip. */}
+      <div className="mt-12 grid items-start gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {items.map(({ icon: Icon, title, body, data }, i) => (
           <div
             key={title}
             className={cn(
-              "flex flex-col rounded-2xl border p-6 transition-[transform,box-shadow] duration-200 ease-[var(--ease-flow)] hover:-translate-y-1",
+              "flex flex-col items-center rounded-2xl border p-7 text-center transition-[transform,box-shadow] duration-200 ease-[var(--ease-flow)] hover:-translate-y-1",
+              i % 2 === 1 && "lg:mt-14",
               onDark
                 ? "border-white/12 bg-white/[0.04] hover:shadow-[var(--shadow-md)]"
                 : "border-water-line bg-white shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]",
@@ -71,17 +74,19 @@ export function Credentials({ tone = "white" }: CredentialsProps) {
           >
             <span
               className={cn(
-                "inline-flex h-12 w-12 items-center justify-center rounded-xl",
-                onDark ? "bg-signal/15 text-signal" : "bg-blue/10 text-blue",
+                "inline-flex h-16 w-16 items-center justify-center rounded-full",
+                onDark
+                  ? "bg-signal/15 text-signal"
+                  : "bg-accent text-white shadow-[var(--shadow-accent)]",
               )}
             >
-              <Icon className="h-6 w-6" aria-hidden="true" />
+              <Icon className="h-7 w-7" aria-hidden="true" />
             </span>
             {/* Reserve two lines so 1- and 2-line titles share a baseline and
                 the rows below stay aligned across all four cards. */}
             <h3
               className={cn(
-                "mt-5 flex min-h-[2.4em] items-start text-h3 leading-[1.15]",
+                "mt-5 flex min-h-[2.4em] items-start justify-center text-h3 leading-[1.15]",
                 onDark ? "text-white" : "text-ink",
               )}
             >
@@ -91,8 +96,8 @@ export function Credentials({ tone = "white" }: CredentialsProps) {
                 an invisible placeholder so every card's body text lines up. */}
             <p
               className={cn(
-                "mt-2 font-mono text-sm font-medium tracking-tight",
-                data ? (onDark ? "text-signal" : "text-blue") : "invisible",
+                "mt-1 font-mono text-sm font-medium tracking-tight",
+                data ? (onDark ? "text-signal" : "text-accent") : "invisible",
               )}
               aria-hidden={data ? undefined : true}
             >

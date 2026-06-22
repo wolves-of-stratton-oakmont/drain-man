@@ -92,14 +92,15 @@ export function validateField(
     }
 
     case "email":
-      if (!v) return "Add an email so we can confirm your request.";
+      // Optional — phone is enough for a callback. Validate format only if given.
+      if (!v) return undefined;
       if (!EMAIL_RE.test(v)) return "Check this email — it's missing an @ or a domain.";
       if (v.length > FIELD_LIMITS.email.max) return "That email is too long.";
       return undefined;
 
     case "service":
-      if (!v) return "Pick what you need help with.";
-      if (!SERVICE_OPTIONS.includes(v as ServiceOption))
+      // Optional; if present it must be a known service.
+      if (v && !SERVICE_OPTIONS.includes(v as ServiceOption))
         return "Pick one of the listed services.";
       return undefined;
 
@@ -127,12 +128,11 @@ export function validateField(
   }
 }
 
-/** Fields a person must fill in. (city + timing are optional; company is the trap.) */
+/** Fields a person must fill in. Kept to the essentials for a 30-second form;
+ *  email, service, city, and timing are optional (company is the trap). */
 export const REQUIRED_FIELDS: (keyof ContactPayload)[] = [
   "name",
   "phone",
-  "email",
-  "service",
   "message",
 ];
 

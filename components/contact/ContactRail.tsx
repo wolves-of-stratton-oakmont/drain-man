@@ -1,122 +1,109 @@
 import * as React from "react";
-import {
-  Phone,
-  Mail,
-  MapPin,
-  Clock,
-  ArrowUpRight,
-  Star,
-} from "lucide-react";
+import { Phone, Mail, MapPin, Clock, ArrowUpRight, Star } from "lucide-react";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 /**
- * Direct-contact rail for the Contact page.
- *
- * The booking form is the primary action; this rail is for people who'd rather
- * call, email, or look us up. The phone number is set in the mono utility face —
- * in this trade the number is a thing you dial, like an instrument readout.
- *
- * All facts come from `@/lib/site` — never hard-coded.
+ * Direct-contact info as a clean, borderless grid beneath the booking form.
+ * Every value shares one type size so the set reads as consistent. All facts
+ * come from `@/lib/site`.
  */
 
 const mapsDirections = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
   site.address.full,
 )}`;
 
-function RailRow({
+function Item({
   icon: Icon,
   label,
   children,
-  className,
+  sub,
 }: {
   icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
   label: string;
   children: React.ReactNode;
-  className?: string;
+  sub: string;
 }) {
   return (
-    <li className={cn("flex gap-4 py-5 first:pt-0 last:pb-0", className)}>
+    <div className="flex flex-col">
       <span
         aria-hidden="true"
-        className="mt-0.5 flex size-11 shrink-0 items-center justify-center rounded-xl bg-blue/10 text-blue"
+        className="flex size-11 items-center justify-center rounded-xl bg-accent/10 text-accent"
       >
         <Icon className="size-5" aria-hidden />
       </span>
-      <div className="min-w-0">
-        <p className="font-mono text-eyebrow font-medium uppercase tracking-[0.18em] text-steel">
-          {label}
-        </p>
-        <div className="mt-1.5">{children}</div>
-      </div>
-    </li>
+      <p className="mt-4 font-mono text-eyebrow font-medium uppercase tracking-[0.18em] text-steel">
+        {label}
+      </p>
+      <div className="mt-1 text-base font-semibold text-ink">{children}</div>
+      <p className="mt-2 text-sm leading-relaxed text-steel">{sub}</p>
+    </div>
   );
 }
 
 export function ContactRail({ className }: { className?: string }) {
   return (
-    <div className={cn("flex flex-col", className)}>
-      <ul className="divide-y divide-water-line">
-        <RailRow icon={Phone} label="Call or text">
+    <div className={cn("flex flex-col items-center", className)}>
+      <div className="grid w-full gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        <Item
+          icon={Phone}
+          label="Call or text"
+          sub="Backed up right now? Call — we'll get someone moving."
+        >
           <a
             href={site.phone.href}
-            className="font-mono text-h3 font-medium text-ink underline-offset-4 transition-colors hover:text-blue focus-visible:text-blue"
+            className="font-mono underline-offset-4 transition-colors hover:text-accent focus-visible:text-accent"
           >
             {site.phone.display}
           </a>
-          <p className="mt-1 text-sm text-steel">
-            Backed up right now? Call — we&apos;ll get someone moving.
-          </p>
-        </RailRow>
+        </Item>
 
-        <RailRow icon={Mail} label="Email">
+        <Item
+          icon={Mail}
+          label="Email"
+          sub="Best for non-urgent quotes and questions."
+        >
           <a
             href={`mailto:${site.email}`}
-            className="break-words text-lead font-semibold text-ink underline-offset-4 transition-colors hover:text-blue hover:underline focus-visible:text-blue"
+            className="break-words underline-offset-4 transition-colors hover:text-accent hover:underline focus-visible:text-accent"
           >
             {site.email}
           </a>
-          <p className="mt-1 text-sm text-steel">
-            Best for non-urgent quotes and questions.
-          </p>
-        </RailRow>
+        </Item>
 
-        <RailRow icon={MapPin} label="Shop">
+        <Item icon={MapPin} label="Shop" sub="Get directions to the shop.">
           <a
             href={mapsDirections}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-start gap-1.5 text-ink underline-offset-4 transition-colors hover:text-blue focus-visible:text-blue"
+            className="group inline-flex items-start gap-1.5 underline-offset-4 transition-colors hover:text-accent focus-visible:text-accent"
           >
-            <span className="not-italic text-base leading-snug">
+            <span className="leading-snug">
               {site.address.line1}
               <br />
               {site.address.city}, {site.address.province} {site.address.postal}
             </span>
             <ArrowUpRight
-              className="mt-0.5 size-4 shrink-0 text-steel transition-colors group-hover:text-blue"
+              className="mt-0.5 size-4 shrink-0 text-steel transition-colors group-hover:text-accent"
               aria-hidden
             />
           </a>
-          <p className="mt-1 text-sm text-steel">Get directions to the shop.</p>
-        </RailRow>
+        </Item>
 
-        <RailRow icon={Clock} label="Hours">
-          <p className="text-base text-ink">
-            Monday to Friday, 8 a.m. – 5 p.m.
-          </p>
-          <p className="mt-1 text-sm text-steel">
-            For burst pipes and floods after hours, call and leave a message —
-            it reaches the on-call line.
-          </p>
-        </RailRow>
-      </ul>
+        <Item
+          icon={Clock}
+          label="Hours"
+          sub="After hours, call and leave a message — it reaches the on-call line."
+        >
+          Mon–Fri, 8 a.m. – 5 p.m.
+        </Item>
+      </div>
 
       <a
         href={site.links.googleReview}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-7 inline-flex items-center gap-2 self-start rounded-full border border-water-line bg-white px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-blue hover:text-blue focus-visible:border-blue"
+        className="mt-10 inline-flex items-center gap-2 rounded-full border border-water-line bg-white px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-accent hover:text-accent focus-visible:border-accent"
       >
         <Star className="size-4 fill-signal text-signal" aria-hidden />
         Leave us a Google review

@@ -11,6 +11,10 @@ export interface PlumberVsTechnicianProps {
   tone?: Tone;
   /** Tighter version for the Home page. */
   compact?: boolean;
+  /** Heading overrides so each page can frame the same comparison in context. */
+  eyebrow?: string;
+  title?: string;
+  description?: string;
 }
 
 type Row = {
@@ -65,6 +69,9 @@ const rows: Row[] = [
 export function PlumberVsTechnician({
   tone = "white",
   compact = false,
+  eyebrow = "Plumber vs. technician",
+  title = "Not every plumber runs the main line",
+  description = "Most plumbing problems stop at a faucet or a fixture. Backed-up drains start underground — and that takes a different trade, different training, and the right machines down the line.",
 }: PlumberVsTechnicianProps) {
   const onDark = tone === "ink" || tone === "blue";
 
@@ -73,9 +80,9 @@ export function PlumberVsTechnician({
       <SectionHeading
         align="center"
         onDark={onDark}
-        eyebrow="Plumber vs. technician"
-        title="Not every plumber runs the main line"
-        description="Most plumbing problems stop at a faucet or a fixture. Backed-up drains start underground — and that takes a different trade, different training, and the right machines down the line."
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
       />
 
       <div className="mt-12 flex flex-col gap-6 md:mt-14 md:gap-8">
