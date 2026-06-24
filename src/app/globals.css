@@ -1,0 +1,477 @@
+/* ============================================================================
+   Drain Man — Global stylesheet
+   "Below Grade" design system. Tailwind v4 + @theme tokens.
+
+   Source of truth: plan/DESIGN-BRIEF.md §2 (color), §3 (type), §4 (space/radii/
+   shadow/border/grid). Every value below maps 1:1 to a brief token.
+
+   HOW TOKENS BECOME UTILITIES (Tailwind v4):
+   - --color-*      -> bg-*, text-*, border-*, fill-*, stroke-*, ring-*, etc.
+   - --font-*       -> font-* (e.g. font-display / font-body / font-mono)
+   - --text-*       -> text-* font-size utils (paired line-height/weight/tracking)
+   - --spacing-N    -> p-N, m-N, gap-N, w-N, h-N, inset-N, space-*-N  (see note)
+   - --radius-*     -> rounded-*
+   - --shadow-*     -> shadow-*
+   - --container-*  -> max-w-*  (e.g. max-w-container)
+   - --breakpoint-* -> responsive variants (sm:, md:, lg:, xl:)
+
+   ⚠ SPACING NOTE: the numeric spacing scale (1–11) below is the Below Grade
+   scale (4/8/12/16/24/32/48/64/96/128/160px) — it intentionally OVERRIDES
+   Tailwind's default ×4 ramp for the keys 1–11. So `p-6` = 32px and `gap-5`
+   = 24px per the brief. This also applies to SIZING utilities (w-/h-/size-),
+   so an icon box is `size-[40px]` (arbitrary), not `size-10`. See ARCHITECTURE.md.
+   ============================================================================ */
+
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   1. THEME TOKENS  →  Tailwind utilities
+   --------------------------------------------------------------------------- */
+@theme {
+  /* ----- Fonts (CSS vars are set by next/font in layout.tsx) ----- */
+  --font-display: var(--font-display-src), "Archivo", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-body: var(--font-body-src), "Source Sans 3", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-mono: var(--font-mono-src), "IBM Plex Mono", ui-monospace,
+    SFMono-Regular, Menlo, monospace;
+
+  /* =========================================================================
+     COLOR — "Below Grade"  (DESIGN-BRIEF §2.1)
+     ========================================================================= */
+
+  /* Brand — dark (iron / below grade) */
+  --color-iron: #1c2b2d; /* anchor: header, dark bands, footer, hero base */
+  --color-iron-2: #16201f; /* deepest shade for layering (corrected token) */
+  --color-pipe: #2e4446; /* secondary dark surface / cards on dark */
+  --color-pipe-line: #3c5658; /* hairlines & borders ON dark surfaces */
+
+  /* Brand — water (primary) */
+  --color-teal: #0e6e73; /* PRIMARY: links, icon strokes, primary fills */
+  --color-teal-deep: #0a565a; /* teal hover / pressed */
+  --color-teal-bright: #1b8f95; /* teal on dark surfaces (AA on iron) */
+  --color-shallow: #e2efee; /* pale teal-grey: alternating light section wash */
+
+  /* Accent — caution / action (sparingly, boldly) */
+  --color-amber: #e8861e; /* CTAs, depth-rule ticks, hover underlines */
+  --color-ember: #c76a12; /* amber hover / pressed */
+  --color-amber-soft: #fbe9d2; /* amber tint: badge bg, highlight chips */
+
+  /* Neutrals (concrete / mortar / steel) */
+  --color-concrete: #f4f2ed; /* PAGE BACKGROUND — warm-cool off-white */
+  --color-mortar: #e7e3da; /* dividers, card borders, hairlines on light */
+  --color-mortar-2: #d9d4c8; /* stronger border / input border */
+  --color-steel: #6b7775; /* secondary / muted body text on light */
+  --color-ink: #14201f; /* primary body text on light */
+  --color-white: #ffffff; /* card surfaces on light */
+
+  /* On-dark text */
+  --color-on-dark: #eaf0ef; /* primary text on iron / pipe */
+  --color-on-dark-mut: #9db0ae; /* muted text on dark */
+
+  /* Semantic */
+  --color-success: #2f8f5b;
+  --color-warning: #e8861e; /* = amber */
+  --color-emergency: #c23b22; /* brick-red — emergency banner + labels only */
+  --color-info: #0e6e73; /* = teal */
+
+  /* =========================================================================
+     TYPOGRAPHY SCALE  (DESIGN-BRIEF §3.2) — fluid via clamp()
+     Utility names: text-display / text-h1 / text-h2 / text-h3 / text-h4 /
+     text-lead / text-body / text-small / text-eyebrow / text-stat / text-stat-xl
+     Each carries its line-height, weight, and tracking per the brief.
+     ========================================================================= */
+  --text-display: clamp(2.375rem, 1.61rem + 3.26vw, 4rem); /* 38 → 64 */
+  --text-display--line-height: 1.02;
+  --text-display--font-weight: 800;
+  --text-display--letter-spacing: -0.02em;
+
+  --text-h1: clamp(2rem, 1.55rem + 1.91vw, 3rem); /* 32 → 48 */
+  --text-h1--line-height: 1.06;
+  --text-h1--font-weight: 800;
+  --text-h1--letter-spacing: -0.015em;
+
+  --text-h2: clamp(1.6875rem, 1.42rem + 1.16vw, 2.25rem); /* 27 → 36 */
+  --text-h2--line-height: 1.12;
+  --text-h2--font-weight: 700;
+  --text-h2--letter-spacing: -0.01em;
+
+  --text-h3: clamp(1.25rem, 1.16rem + 0.4vw, 1.4375rem); /* 20 → 23 */
+  --text-h3--line-height: 1.2;
+  --text-h3--font-weight: 700;
+  --text-h3--letter-spacing: -0.005em;
+
+  --text-h4: clamp(1.125rem, 1.09rem + 0.13vw, 1.1875rem); /* 18 → 19 */
+  --text-h4--line-height: 1.3;
+  --text-h4--font-weight: 600;
+  --text-h4--letter-spacing: 0em;
+
+  --text-lead: clamp(1.125rem, 1.04rem + 0.36vw, 1.3125rem); /* 18 → 21 */
+  --text-lead--line-height: 1.5;
+  --text-lead--font-weight: 400;
+  --text-lead--letter-spacing: 0em;
+
+  --text-body: clamp(1rem, 0.98rem + 0.09vw, 1.0625rem); /* 16 → 17 */
+  --text-body--line-height: 1.65;
+  --text-body--font-weight: 400;
+  --text-body--letter-spacing: 0em;
+
+  --text-small: clamp(0.875rem, 0.86rem + 0.07vw, 0.90625rem); /* 14 → 14.5 */
+  --text-small--line-height: 1.5;
+  --text-small--font-weight: 400;
+  --text-small--letter-spacing: 0em;
+
+  --text-eyebrow: clamp(0.75rem, 0.73rem + 0.09vw, 0.8125rem); /* 12 → 13 */
+  --text-eyebrow--line-height: 1.4;
+  --text-eyebrow--font-weight: 600;
+  --text-eyebrow--letter-spacing: 0.18em;
+
+  --text-stat: clamp(3.25rem, 2.16rem + 4.65vw, 4.75rem); /* 52 → 76 */
+  --text-stat--line-height: 1;
+  --text-stat--font-weight: 600;
+  --text-stat--letter-spacing: -0.01em;
+
+  --text-stat-xl: clamp(3.75rem, 2.16rem + 6.7vw, 6rem); /* 60 → 96 */
+  --text-stat-xl--line-height: 0.95;
+  --text-stat-xl--font-weight: 600;
+  --text-stat-xl--letter-spacing: -0.02em;
+
+  /* =========================================================================
+     SPACING  (DESIGN-BRIEF §4.1) — overrides the default 1–11 ramp.
+     ========================================================================= */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 48px;
+  --spacing-8: 64px;
+  --spacing-9: 96px;
+  --spacing-10: 128px;
+  --spacing-11: 160px;
+
+  /* =========================================================================
+     RADII  (DESIGN-BRIEF §4.2)  → rounded-sm / rounded-md / rounded-lg / rounded-pill
+     ========================================================================= */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* =========================================================================
+     SHADOWS  (DESIGN-BRIEF §4.3)  → shadow-sm / shadow-md / shadow-lg / shadow-focus
+     ========================================================================= */
+  --shadow-sm: 0 1px 2px rgba(20, 32, 31, 0.06), 0 1px 1px rgba(20, 32, 31, 0.04);
+  --shadow-md: 0 6px 18px rgba(20, 32, 31, 0.08);
+  --shadow-lg: 0 18px 44px rgba(20, 32, 31, 0.12);
+  --shadow-focus: 0 0 0 3px rgba(14, 110, 115, 0.35); /* teal focus ring */
+
+  /* =========================================================================
+     CONTAINERS  (DESIGN-BRIEF §4.5)  → max-w-container / max-w-container-wide /
+     max-w-container-prose
+     ========================================================================= */
+  --container-container: 1200px;
+  --container-container-wide: 1320px;
+  --container-container-prose: 720px;
+
+  /* =========================================================================
+     BREAKPOINTS  (DESIGN-BRIEF §4.5)  → sm: / md: / lg: / xl:
+     ========================================================================= */
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+
+  /* =========================================================================
+     MOTION (DESIGN-BRIEF §6 / §7) — easing + durations as tokens
+     ========================================================================= */
+  --ease-depth: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: ease;
+}
+
+/* ---------------------------------------------------------------------------
+   2. NON-UTILITY CSS VARS (gutters, scrim) — referenced directly where needed
+   --------------------------------------------------------------------------- */
+:root {
+  --gutter: 24px; /* mobile */
+  --scrim-iron: linear-gradient(
+    180deg,
+    rgba(28, 43, 45, 0) 0%,
+    rgba(28, 43, 45, 0.78) 100%
+  );
+  --scrim-iron-left: linear-gradient(
+    90deg,
+    rgba(28, 43, 45, 0.82) 0%,
+    rgba(28, 43, 45, 0.5) 45%,
+    rgba(28, 43, 45, 0) 100%
+  );
+}
+@media (min-width: 768px) {
+  :root {
+    --gutter: 32px;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 48px;
+  }
+}
+
+/* Clean aliases for the container widths (the @theme keys are named
+   --container-container* so they emit max-w-container* utilities; these plain
+   aliases give CSS a non-doubled name to reference directly). */
+:root {
+  --container-prose: var(--container-container-prose);
+  --container-wide: var(--container-container-wide);
+}
+
+/* ---------------------------------------------------------------------------
+   3. BASE ELEMENT STYLES  (DESIGN-BRIEF §9 quality floor)
+   --------------------------------------------------------------------------- */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-mortar);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-concrete);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Headings default to the display family with tight tracking; pages still
+     apply explicit text-* utilities for exact sizing. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  /* Tabular figures for the mono "spec" voice and stats (DESIGN-BRIEF §3.3). */
+  .font-mono,
+  [class*="text-stat"],
+  [class*="text-eyebrow"] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Media defaults */
+  img,
+  picture,
+  svg,
+  video {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Form controls inherit type */
+  input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+    color: inherit;
+  }
+
+  /* Visible keyboard focus everywhere (DESIGN-BRIEF §6 / §9). */
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+    border-radius: var(--radius-sm);
+  }
+
+  ::selection {
+    background-color: var(--color-amber-soft);
+    color: var(--color-iron-2);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   4. REUSABLE UTILITIES / PRIMITIVES
+   React components own most markup; these are the few shared CSS hooks the
+   whole team may rely on (sr-only, skip-link, depth rule, eyebrow, scrim, prose).
+   --------------------------------------------------------------------------- */
+@layer components {
+  /* --- Accessibility: screen-reader-only + skip link --- */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: var(--spacing-4);
+    top: var(--spacing-2);
+    z-index: 100;
+    transform: translateY(-150%);
+    background-color: var(--color-iron);
+    color: var(--color-on-dark);
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: var(--spacing-3) var(--spacing-4);
+    border-radius: var(--radius-sm);
+    transition: transform 200ms var(--ease-depth);
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+    box-shadow: var(--shadow-focus);
+  }
+
+  /* --- Eyebrow (DESIGN-BRIEF §3.3 / §6.3): mono, uppercase, tracked, amber,
+     prefixed by a short amber tick. Components may also compose this with
+     Tailwind utilities; this class is the canonical baked version. --- */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-amber);
+    line-height: 1.4;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 2px;
+    background-color: var(--color-amber);
+    flex: none;
+  }
+  /* On dark surfaces, eyebrow text may switch to teal-bright via .eyebrow--on-dark */
+  .eyebrow--on-dark {
+    color: var(--color-teal-bright);
+  }
+  .eyebrow--on-dark::before {
+    background-color: var(--color-amber);
+  }
+
+  /* --- Depth rule (DESIGN-BRIEF §4.4): hairline + amber tick marks every 64px,
+     like a grade-depth gauge. Used between sections (sparingly). Height ~24px. --- */
+  .depth-rule {
+    position: relative;
+    height: 24px;
+    width: 100%;
+  }
+  .depth-rule::before {
+    /* the baseline hairline */
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background-color: var(--color-mortar);
+  }
+  .depth-rule::after {
+    /* repeating amber ticks rising from the baseline */
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 10px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--color-amber) 0,
+      var(--color-amber) 1.5px,
+      transparent 1.5px,
+      transparent 64px
+    );
+  }
+  /* dark-surface variant */
+  .depth-rule--on-dark::before {
+    background-color: var(--color-pipe-line);
+  }
+
+  /* --- Photo scrim (DESIGN-BRIEF §2.3): iron gradient over hero/CTA photos --- */
+  .scrim-iron::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--scrim-iron);
+    pointer-events: none;
+  }
+  .scrim-iron-left::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--scrim-iron-left);
+    pointer-events: none;
+  }
+
+  /* --- Signature link underline wipe (DESIGN-BRIEF §6.10): amber underline
+     wipes in left→right on hover. Apply to inline/ghost links. --- */
+  .link-underline {
+    background-image: linear-gradient(var(--color-amber), var(--color-amber));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+    transition: background-size 250ms var(--ease-depth);
+    padding-bottom: 1px;
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 2px;
+  }
+
+  /* --- Prose column (DESIGN-BRIEF §3.3): readable long-form, capped width --- */
+  .prose-column {
+    max-width: var(--container-prose);
+    font-size: var(--text-body);
+    line-height: 1.65;
+    color: var(--color-ink);
+  }
+  .prose-column > * + * {
+    margin-top: var(--spacing-5);
+  }
+  .prose-column p {
+    max-width: 68ch;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   5. REDUCED MOTION  (DESIGN-BRIEF §7 — quality-floor requirement)
+   --------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

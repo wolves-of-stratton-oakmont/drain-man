@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 248 48" width="248" height="48" role="img" aria-label="The Drain Man Inc. logo">
+  <title>The Drain Man Inc. logo</title>
+  <!-- ===== Mark (light/reversed for dark backgrounds) ===== -->
+  <g>
+    <circle cx="24" cy="24" r="17" fill="none" stroke="#1B8F95" stroke-width="3.25"/>
+    <circle cx="24" cy="24" r="13.25" fill="#1C2B2D" stroke="#1B8F95" stroke-width="1.25"/>
+    <rect x="21.6" y="5.4" width="4.8" height="5.2" rx="0.6" fill="#1C2B2D"/>
+    <rect x="22.85" y="5.9" width="2.3" height="4.6" rx="1.15" fill="#E8861E"/>
+    <path d="M24 13.4c4.1 4.9 6.4 8 6.4 11a6.4 6.4 0 0 1-12.8 0c0-3 2.3-6.1 6.4-11Z" fill="#1B8F95"/>
+    <path d="M20.7 24.2a3.4 3.4 0 0 0 2.5 3.1" fill="none" stroke="#1C2B2D" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>
+  </g>
+  <!-- ===== Wordmark "DRAIN MAN" reversed ===== -->
+  <text x="52" y="32"
+        font-family="Archivo, 'Arial Black', system-ui, sans-serif"
+        font-weight="800" font-size="26" letter-spacing="-0.5">
+    <tspan fill="#EAF0EF">DRAIN</tspan><tspan fill="#1B8F95" dx="6">MAN</tspan>
+  </text>
+</svg>

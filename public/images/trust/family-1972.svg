@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="Family-owned since 1972">
+  <title>Family-owned since 1972</title>
+  <!-- seal frame: double ring + dashed inner, Below Grade palette -->
+  <circle cx="60" cy="60" r="56" fill="#FFFFFF" stroke="#0E6E73" stroke-width="2"/>
+  <circle cx="60" cy="60" r="49.5" fill="none" stroke="#0E6E73" stroke-width="1" stroke-dasharray="1.5 4"/>
+  <!-- crown amber tick -->
+  <rect x="58.8" y="5.5" width="2.4" height="7" rx="1.2" fill="#E8861E"/>
+  <!-- stacked mono lockup -->
+  <text x="60" y="40" font-family="'IBM Plex Mono', ui-monospace, monospace" font-weight="600" font-size="8.5" letter-spacing="3" fill="#14201F" text-anchor="middle">FAMILY OWNED</text>
+  <text x="60" y="53" font-family="'IBM Plex Mono', ui-monospace, monospace" font-weight="500" font-size="8" letter-spacing="4" fill="#0E6E73" text-anchor="middle">SINCE</text>
+  <text x="60" y="80" font-family="'IBM Plex Mono', ui-monospace, monospace" font-weight="600" font-size="28" letter-spacing="1" fill="#1C2B2D" text-anchor="middle">1972</text>
+  <!-- amber depth-ticks flanking the year -->
+  <rect x="31" y="68" width="2" height="9" rx="1" fill="#E8861E"/>
+  <rect x="87" y="68" width="2" height="9" rx="1" fill="#E8861E"/>
+  <!-- footline -->
+  <text x="60" y="98" font-family="'IBM Plex Mono', ui-monospace, monospace" font-weight="500" font-size="7.5" letter-spacing="2.5" fill="#6B7775" text-anchor="middle">TORONTO · GTA</text>
+</svg>
