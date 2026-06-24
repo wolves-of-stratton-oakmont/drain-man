@@ -34,9 +34,15 @@ export function currentYear(): number {
   return new Date().getFullYear();
 }
 
-/** Absolute site URL (production). Builders should prefer relative paths +
-    metadataBase; this is for places that need a fully-qualified URL (JSON-LD). */
-export const SITE_URL = "https://www.thedrainman.ca";
+/** Absolute site URL (production), no trailing slash. Override per-deploy with
+    the NEXT_PUBLIC_SITE_URL env var (it is inlined at build time, so set it
+    BEFORE `next build`); falls back to the production domain. Used by
+    metadataBase (layout.tsx), sitemap.ts, robots.ts and the JSON-LD in seo.tsx.
+    Builders should prefer relative paths + metadataBase; this is for the few
+    places that need a fully-qualified URL. */
+export const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL || "https://www.thedrainman.ca"
+).replace(/\/+$/, "");
 
 /** Build an absolute URL from a site-relative path. */
 export function absoluteUrl(path = "/"): string {
