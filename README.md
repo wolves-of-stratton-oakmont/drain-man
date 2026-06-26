@@ -35,31 +35,47 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Booking form email (wiring `CONTACT_WEBHOOK_URL`)
+## Booking form email (Mailjet)
 
 The Contact page booking form (`components/booking/BookingForm.tsx`) posts to
-`app/api/contact/route.ts`, which validates the request and forwards it to an
-**email webhook**. There is no live calendar — it simply turns a form submission
-into an email to the company.
+`app/api/contact/route.ts`, which validates the request and then sends it as a
+**transactional email via [Mailjet](https://www.mailjet.com)** straight from the
+server (no Zapier/Make/webhook in between). There is no live calendar — it simply
+turns a form submission into an email to the company, with **Reply-To** set to the
+customer so a reply reaches them directly.
 
 **To make it send real emails:**
 
-1. Create a webhook that emails `admin@drainmaninc.com`. Any of these work:
-   - **Zapier** — "Webhooks by Zapier → Catch Hook" trigger, then a "Gmail / Email" action.
-   - **Make.com** — a "Custom webhook" trigger, then an "Email" module.
-   - **Formspree** — use the project endpoint URL (it accepts JSON POSTs).
-2. Copy `.env.example` to `.env.local` and set the URL:
+1. **Create a Mailjet account.** The free tier (~200 emails/day, ~6,000/month) is
+   plenty for a contact form.
+2. **Verify the sender + set up DNS.** In Mailjet → *Senders & Domains*, add a
+   domain you control and a sender address on it (e.g. `no-reply@drainmaninc.com`),
+   then add the **SPF** and **DKIM** DNS records Mailjet gives you at your domain
+   registrar. This is what keeps the emails out of spam. **Do not send "From" a
+   Gmail/Outlook address** — it fails authentication and bounces.
+3. **Copy your API credentials.** Mailjet → *API Key Management* gives you an
+   **API Key** and a **Secret Key** (a username/password pair).
+4. **Set the env vars** locally, then on your host:
    ```bash
    cp .env.example .env.local
    # then edit .env.local:
-   CONTACT_WEBHOOK_URL=https://hooks.zapier.com/hooks/catch/XXXX/YYYY/
+   MAILJET_API_KEY=...
+   MAILJET_SECRET_KEY=...
+   MAILJET_FROM_EMAIL=no-reply@drainmaninc.com
+   # optional:
+   # MAILJET_FROM_NAME=The Drain Man Inc
+   # CONTACT_TO_EMAIL=admin@drainmaninc.com   (defaults to admin@drainmaninc.com)
    ```
-3. Restart the dev server (or redeploy). The route POSTs JSON like:
-   `{ name, phone, email, service, city, timing, message, source, submittedAt }`.
+   On Vercel, set the same vars in **Project → Settings → Environment Variables**.
+5. **Restart the dev server (or redeploy).** Env changes only take effect on a
+   fresh boot/deployment. Leads now arrive at `admin@drainmaninc.com`.
 
-`CONTACT_WEBHOOK_URL` is **server-only** (no `NEXT_PUBLIC_` prefix), so the URL is
-never exposed to the browser. Never commit a real value — `.env*` is gitignored.
+All of these vars are **server-only** (no `NEXT_PUBLIC_` prefix), so your Mailjet
+secret is never exposed to the browser. Never commit real values — `.env*` is
+gitignored. The Secret Key is sensitive: treat it like a password and rotate it in
+Mailjet if it ever leaks.
 
-**Before it's wired:** if `CONTACT_WEBHOOK_URL` is unset, the form still works in
-dev — the API logs the payload to the server console and returns success, but no
-email is sent.
+**Before it's configured:** until the three required vars are set, the form does
+**not** silently accept leads — it logs the submission to the server console (so
+it's recoverable) and shows a "please call us at (416) 699-1370" message. Set the
+vars to enable real delivery.

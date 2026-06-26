@@ -218,12 +218,18 @@ Notes for Sections:
     `aria-invalid` + `aria-describedby` on errors; manage focus to the first error /
     success message; submit button shows a pending state.
 - **`app/api/contact/route.ts`** — replace the 501 stub.
-  - Validate input server-side. Forward to a webhook that emails the company
-    (webhook-to-email; **NOT a live calendar**). Read the webhook URL from a
-    **server-side env var** (e.g. `CONTACT_WEBHOOK_URL`) via `process.env` — never
-    expose it to the client, never commit a secret. If the env var is missing, return
-    a clear 500 (don't crash the build). Return `{ ok: true }` / `{ ok: false, error }`.
-  - Document the env var in code comments; do not create a committed `.env`.
+  - Validate input server-side, then send the submission to the company as a
+    **transactional email via the Mailjet Send API v3.1** using global `fetch`
+    (no SDK) — email delivery, **NOT a live calendar**. Read the Mailjet
+    credentials + addresses from **server-side env vars** (`MAILJET_API_KEY`,
+    `MAILJET_SECRET_KEY`, `MAILJET_FROM_EMAIL`; optional `MAILJET_FROM_NAME`,
+    `CONTACT_TO_EMAIL` → defaults to `admin@drainmaninc.com`) via `process.env` —
+    never expose them to the client, never commit a secret. Set the email's
+    `ReplyTo` to the customer's email **only when provided** (it is optional). If
+    the required vars are missing, log the (redacted) payload and return a clear
+    502; on a Mailjet failure (including an HTTP 200 whose `Messages[0].Status`
+    isn't `"success"`) return a 502. Return `{ ok: true }` / `{ ok: false, error }`.
+  - Document the env vars in code comments; do not create a committed `.env`.
 
 ---
 

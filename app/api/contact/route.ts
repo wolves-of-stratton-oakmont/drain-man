@@ -1,20 +1,26 @@
 import { NextResponse } from "next/server";
 import { parseContact, type ContactPayload } from "@/lib/contact-schema";
+import { site } from "@/lib/site";
 
 /**
  * POST /api/contact — booking / service-request endpoint.
  *
- * Simple webhook-to-email flow (NOT a live calendar):
+ * Direct email flow (NOT a live calendar):
  *   1. Validate the request body server-side (shared rules in lib/contact-schema).
- *   2. Forward the clean payload to a webhook that emails the company.
+ *   2. Send the clean payload to the company as a transactional email via the
+ *      Mailjet Send API v3.1 (global fetch + HTTP Basic auth — no SDK).
  *
- * The webhook URL is read from the SERVER-side env var `CONTACT_WEBHOOK_URL`
- * (e.g. a Zapier / Make / Formspree "Catch Hook" that emails admin@drainmaninc.com).
- * It is never sent to the browser and must never be committed. See .env.example.
+ * Mailjet credentials + addresses come from SERVER-side env vars
+ * (`MAILJET_API_KEY`, `MAILJET_SECRET_KEY`, `MAILJET_FROM_EMAIL`; optional
+ * `MAILJET_FROM_NAME`, `CONTACT_TO_EMAIL`). They are never sent to the browser
+ * and must never be committed. See .env.example.
  *
- * DEV / not-yet-wired behavior: if `CONTACT_WEBHOOK_URL` is unset, we DON'T fail —
- * we log the payload to the server console and return a friendly success so the form
- * is fully usable before the client wires up their webhook. (No email is sent.)
+ * If the required Mailjet vars are unset we DON'T silently accept the lead — we
+ * log the (redacted) payload so it's recoverable and return a friendly 502 asking
+ * the customer to call. Set the env vars to enable real delivery.
+ *
+ * The `From` address must be a Mailjet-verified sender on a domain you control
+ * (SPF + DKIM) or mail will be rejected / land in spam.
  */
 
 export const runtime = "nodejs";
@@ -50,34 +56,70 @@ export async function POST(request: Request) {
 
   const payload = result.data;
 
-  // 3. Forward to the email webhook (if configured).
-  const webhookUrl = process.env.CONTACT_WEBHOOK_URL;
+  // 3. Send the lead as a transactional email via Mailjet (server-only config).
+  const apiKey = process.env.MAILJET_API_KEY;
+  const secretKey = process.env.MAILJET_SECRET_KEY;
+  const fromEmail = process.env.MAILJET_FROM_EMAIL;
 
-  if (!webhookUrl) {
-    // Not wired yet — keep the form working in dev. Log so the request isn't lost.
-    console.warn(
-      "[contact] CONTACT_WEBHOOK_URL is not set — no email sent. Request payload:",
+  // Not configured → never accept a lead we can't deliver. Log it (so it's
+  // recoverable from the server logs) and ask the customer to call.
+  if (!apiKey || !secretKey || !fromEmail) {
+    console.error(
+      "[contact] Mailjet not configured (need MAILJET_API_KEY, MAILJET_SECRET_KEY, MAILJET_FROM_EMAIL). Lead NOT emailed:",
       redactForLog(payload),
     );
-    return ok();
+    return fail(
+      "Something went wrong sending your request. Please call us at (416) 699-1370 and we'll take care of it.",
+      502,
+    );
   }
 
+  const fromName = process.env.MAILJET_FROM_NAME || site.legalName;
+  const toEmail = process.env.CONTACT_TO_EMAIL || site.email;
+  const source = "drainmaninc.com booking form";
+  const submittedAt = new Date().toISOString();
+
   try {
-    const res = await fetch(webhookUrl, {
+    const res = await fetch("https://api.mailjet.com/v3.1/send", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Basic " + Buffer.from(`${apiKey}:${secretKey}`).toString("base64"),
+      },
       body: JSON.stringify({
-        ...payload,
-        source: "drainmaninc.com booking form",
-        submittedAt: new Date().toISOString(),
+        Messages: [
+          {
+            From: { Email: fromEmail, Name: fromName },
+            To: [{ Email: toEmail, Name: site.legalName }],
+            Subject: `New booking request — ${payload.name}${
+              payload.service ? ` (${payload.service})` : ""
+            }`,
+            TextPart: buildTextPart(payload, source, submittedAt),
+            HTMLPart: buildHtmlPart(payload, source, submittedAt),
+            // Reply-To the customer only when they left an email (it's optional).
+            ...(payload.email
+              ? { ReplyTo: { Email: payload.email, Name: payload.name } }
+              : {}),
+          },
+        ],
       }),
-      // Don't let a slow/hung webhook hold the request open forever.
+      // Don't let a slow/hung API hold the request open forever.
       signal: AbortSignal.timeout(10_000),
     });
 
-    if (!res.ok) {
+    // Mailjet returns HTTP 200 even when an individual message fails — inspect
+    // the per-message Status so we never report a failed send as success.
+    const data = (await res.json().catch(() => null)) as {
+      Messages?: Array<{ Status?: string; Errors?: unknown }>;
+    } | null;
+    const status = data?.Messages?.[0]?.Status;
+
+    if (!res.ok || status !== "success") {
       console.error(
-        `[contact] Webhook responded ${res.status}. The request was not emailed.`,
+        `[contact] Mailjet send failed. HTTP ${res.status}; message status:`,
+        status ?? "(unparseable)",
+        data?.Messages?.[0]?.Errors ?? "",
       );
       return fail(
         "Something went wrong sending your request. Please call us at (416) 699-1370 and we'll take care of it.",
@@ -85,7 +127,7 @@ export async function POST(request: Request) {
       );
     }
   } catch (err) {
-    console.error("[contact] Webhook request failed:", err);
+    console.error("[contact] Mailjet request failed:", err);
     return fail(
       "Something went wrong sending your request. Please call us at (416) 699-1370 and we'll take care of it.",
       502,
@@ -106,6 +148,60 @@ function redactForLog(p: ContactPayload) {
     timing: p.timing,
     message: p.message.length > 140 ? `${p.message.slice(0, 140)}…` : p.message,
   };
+}
+
+/** Escape user-supplied text before interpolating into the HTML email. */
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+/** Plain-text version of the lead email. Empty optional fields render as "—". */
+function buildTextPart(p: ContactPayload, source: string, submittedAt: string) {
+  const dash = (v: string) => (v ? v : "—");
+  return [
+    "New booking request from drainmaninc.com",
+    "",
+    `Name:    ${p.name}`,
+    `Phone:   ${p.phone}`,
+    `Email:   ${dash(p.email)}`,
+    `Service: ${dash(p.service)}`,
+    `City:    ${dash(p.city)}`,
+    `Timing:  ${dash(p.timing)}`,
+    "",
+    "Message:",
+    p.message,
+    "",
+    "---",
+    `Source: ${source}`,
+    `Submitted: ${submittedAt}`,
+  ].join("\n");
+}
+
+/** HTML version of the lead email — every user value is escaped. */
+function buildHtmlPart(p: ContactPayload, source: string, submittedAt: string) {
+  const dash = (v: string) => (v ? escapeHtml(v) : "—");
+  const row = (label: string, value: string) =>
+    `<p style="margin:0 0 6px"><strong>${label}:</strong> ${value}</p>`;
+  return [
+    `<h2 style="margin:0 0 12px">New booking request</h2>`,
+    row("Name", escapeHtml(p.name)),
+    row("Phone", escapeHtml(p.phone)),
+    row("Email", dash(p.email)),
+    row("Service", dash(p.service)),
+    row("City", dash(p.city)),
+    row("Timing", dash(p.timing)),
+    `<p style="margin:12px 0 4px"><strong>Message:</strong></p>`,
+    `<p style="margin:0">${escapeHtml(p.message).replace(/\n/g, "<br>")}</p>`,
+    `<hr style="margin:16px 0;border:none;border-top:1px solid #ddd">`,
+    `<p style="margin:0;color:#666;font-size:12px">Source: ${escapeHtml(
+      source,
+    )} · Submitted: ${escapeHtml(submittedAt)}</p>`,
+  ].join("\n");
 }
 
 // Anything other than POST gets a clear 405.
