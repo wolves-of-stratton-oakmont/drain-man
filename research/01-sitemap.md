@@ -147,7 +147,7 @@ Asset srcs:
 - `css/drain_man_stylesheet.css`
 - `favicon.ico`
 - `/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js` (Cloudflare anti-spam)
-- `https://maps.googleapis.com/maps/api/js?key=AIzaSyBJKvdZ6LAFYZtypT0mV1JwF8q9GtkikmY&callback=load_map` (Google Maps embed)
+- `https://maps.googleapis.com/maps/api/js?key=REDACTED&callback=load_map` (Google Maps embed)
 
 Special: Embeds a Google Map via `<div class="map" id="drain_man_map">`. The map is centered at lat/lng `43.730682, -79.246028` (440 Brimley Rd, Scarborough). No modal JS on this page.
 
@@ -229,7 +229,7 @@ Note: The `<title>` is identical across all 5 pages — there is no per-page tit
 2. **Single shared title** — the `<title>` tag is the same on every page; the rebuild should use distinct per-page `<title>` values for SEO.
 3. **Typo on services.html**: The first service section heading reads `"Drain Sevices"` (missing the 'r'). Correct to `"Drain Services"` in the rebuild.
 4. **Email is obfuscated** via Cloudflare: the real address is `admin@drainmaninc.com`.
-5. **Google Maps API key exposed** in HTML: `AIzaSyBJKvdZ6LAFYZtypT0mV1JwF8q9GtkikmY` — note for rebuild (the client may want to move this to an env variable or restrict the key).
+5. **Google Maps API key exposed** in HTML: `REDACTED` — note for rebuild (the client may want to move this to an env variable or restrict the key).
 6. **Google Maps coordinates**: lat `43.730682`, lng `-79.246028` — confirmed correct for 440 Brimley Rd, Scarborough.
 7. **No external CSS frameworks** — the site uses a single hand-written stylesheet (`drain_man_stylesheet.css`).
 8. **No analytics tag** visible in the HTML (no GA, GTM, or similar).

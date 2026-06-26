@@ -282,7 +282,7 @@ M1J 1A1
 - URL: `https://search.google.com/local/writereview?placeid=ChIJbypPpJXO1IkRTagYYBJsvs4`
 - Opens in `target="_blank"`
 
-**Map:** Google Maps JS API embed (NOT iframe). API key: `AIzaSyBJKvdZ6LAFYZtypT0mV1JwF8q9GtkikmY` (exposed in HTML — flag for client). Center coordinates: `lat: 43.730682, lng: -79.246028`. Zoom: 15. Div: `<div class="map" id="drain_man_map">` at `height: 80vh`.
+**Map:** Google Maps JS API embed (NOT iframe). API key: `REDACTED` (exposed in HTML — flag for client). Center coordinates: `lat: 43.730682, lng: -79.246028`. Zoom: 15. Div: `<div class="map" id="drain_man_map">` at `height: 80vh`.
 
 **No contact form** exists on live site.
 **No business hours** listed.
@@ -542,7 +542,7 @@ This section translates what exists into what the new site requires. It is organ
 - No analytics (no GA, GTM, or similar)
 - No social media links anywhere
 - Cloudflare in use (email obfuscation, CDN scripts)
-- Google Maps API key in plain HTML: `AIzaSyBJKvdZ6LAFYZtypT0mV1JwF8q9GtkikmY` — flag for client; use embed iframe instead
+- Google Maps API key in plain HTML: `REDACTED` — flag for client; use embed iframe instead
 - JavaScript: single file `javascript/script_main.js` — handles mobile menu, lightbox modal, map initialization, preload class removal
 - CSS: single file `css/drain_man_stylesheet.css` — no frameworks, hand-written
 - No external CSS frameworks (no Bootstrap, Tailwind, etc.)

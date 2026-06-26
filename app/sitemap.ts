@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
-// Keep this base in sync with `metadataBase` in app/layout.tsx.
-const baseUrl = "https://drainmaninc.com";
+// Base origin from NEXT_PUBLIC_SITE_URL; falls back to the production domain.
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://drainmaninc.com";
 
 /**
  * Static sitemap covering all five public routes (Home, Services, About,

@@ -53,8 +53,8 @@ A Google Maps embed is rendered dynamically via JavaScript (not a static `<ifram
 
 - Div: `<div class="map" id="drain_man_map"></div>`
 - Map loaded by `load_map()` callback in `javascript/script_main.js`
-- Google Maps JS API key: `AIzaSyBJKvdZ6LAFYZtypT0mV1JwF8q9GtkikmY`
-- Script src: `https://maps.googleapis.com/maps/api/js?key=AIzaSyBJKvdZ6LAFYZtypT0mV1JwF8q9GtkikmY&callback=load_map`
+- Google Maps JS API key: `REDACTED`
+- Script src: `https://maps.googleapis.com/maps/api/js?key=REDACTED&callback=load_map`
 - Map center coordinates: `lat: 43.730682, lng: -79.246028`
 - Default zoom level: `15`
 - A marker is placed at those coordinates; clicking the marker re-centers and re-zooms to default.
@@ -181,7 +181,7 @@ No other images appear on the contact page.
 | Script | Notes |
 |--------|-------|
 | `javascript/script_main.js` | Loaded in `<head>`; contains `load_map()`, mobile menu logic, modal logic |
-| `https://maps.googleapis.com/maps/api/js?key=AIzaSyBJKvdZ6LAFYZtypT0mV1JwF8q9GtkikmY&callback=load_map` | Google Maps API, loaded at bottom of `<body>` |
+| `https://maps.googleapis.com/maps/api/js?key=REDACTED&callback=load_map` | Google Maps API, loaded at bottom of `<body>` |
 | `/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js` | Cloudflare email obfuscation decoder, loaded at bottom of `<body>` (has `data-cfasync="false"`) |
 
 ---

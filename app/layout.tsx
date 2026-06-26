@@ -25,7 +25,7 @@ const robotoMono = Roboto_Mono({
   display: "swap",
 });
 
-const siteUrl = "https://drainmaninc.com";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://drainmaninc.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
