@@ -90,6 +90,35 @@
 }
 
 /* ============================================================================
+   TEMPORARY — red-theme preview (remove with proxy.ts + layout.tsx x-theme
+   handling once the client picks a colour).
+   Scoped theme override — flip the brand knob to red for a subtree (e.g. the
+   /red route). The derived ramp is defined at :root, so a child that overrides
+   only --color-accent would leave ink/steel/lines blue; re-declaring the full
+   ramp here (same formulas) makes every token recompute from the red accent.
+   ============================================================================ */
+
+.theme-red {
+  --color-accent: #e11d2a; /* knob 1 — red brand hue */
+  --accent-bleed: 14%; /* knob 2 — unchanged */
+
+  --color-accent-deep: color-mix(in oklab, var(--color-accent), black 20%);
+  --color-accent-tint: color-mix(in oklab, var(--color-accent) 6%, white);
+  --color-accent-line: color-mix(in oklab, var(--color-accent) 16%, white);
+  --color-ink: color-mix(in oklab, var(--color-accent) var(--accent-bleed), #0b0d14);
+  --color-steel: color-mix(in oklab, var(--color-accent) calc(var(--accent-bleed) - 4%), #6b7280);
+
+  /* legacy aliases (also declared at :root, so must be re-pointed here) */
+  --color-blue: var(--color-accent);
+  --color-blue-deep: var(--color-accent-deep);
+  --color-water: var(--color-accent-tint);
+  --color-water-line: var(--color-accent-line);
+
+  --shadow-accent: 0 10px 30px color-mix(in oklab, var(--color-accent) 30%, transparent);
+  --shadow-blue: var(--shadow-accent);
+}
+
+/* ============================================================================
    Base
    ============================================================================ */
 

@@ -14,6 +14,9 @@ type Person = {
   note: string;
 };
 
+// Add or edit team members here. The first two are the named principals; the
+// last two are generic placeholders — swap in real names, roles, and notes (or
+// add more entries to the array) whenever you're ready.
 const family: Person[] = [
   {
     name: "Bill Barber",
@@ -26,14 +29,14 @@ const family: Person[] = [
     note: "Bill’s son and part of the second-generation leadership keeping the books — and the values — straight.",
   },
   {
-    name: "Shawna",
-    role: "Head office",
-    note: "Bill’s daughter, running the head office so the crews can focus on the work.",
+    name: "Team member",
+    role: "Role",
+    note: "Add a short line about this team member — what they do and why they’re part of the family.",
   },
   {
-    name: "Brian",
-    role: "Service technician",
-    note: "Bill’s son-in-law, out on calls clearing and repairing drains across the GTA.",
+    name: "Team member",
+    role: "Role",
+    note: "Add a short line about this team member — what they do and why they’re part of the family.",
   },
 ];
 
@@ -54,8 +57,8 @@ export function FamilyGrid({ className }: { className?: string }) {
         className,
       )}
     >
-      {family.map((person) => (
-        <li key={person.name}>
+      {family.map((person, i) => (
+        <li key={i}>
           <Card variant="default" className="flex h-full flex-col gap-4">
             {/*
               Brand monogram, not a photo placeholder: a solid Drain-Blue disc

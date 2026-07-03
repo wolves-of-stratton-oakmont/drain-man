@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Archivo, Source_Sans_3, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
@@ -60,17 +61,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // TEMPORARY — red-theme preview (remove with proxy.ts + the .theme-red block
+  // in globals.css once the client picks a colour).
+  // The /red proxy tags requests with `x-theme: red`; flip the whole page's
+  // brand ramp by adding `.theme-red` (defined in globals.css) to <body>.
+  const theme = (await headers()).get("x-theme");
+  const themeClass = theme === "red" ? "theme-red" : "";
+
   return (
     <html
       lang="en"
       className={`${archivo.variable} ${sourceSans.variable} ${robotoMono.variable} h-full`}
     >
-      <body className="flex min-h-full flex-col bg-white text-ink antialiased">
+      <body className={`flex min-h-full flex-col bg-white text-ink antialiased ${themeClass}`}>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
