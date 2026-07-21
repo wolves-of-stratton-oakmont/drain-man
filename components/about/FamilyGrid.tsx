@@ -14,9 +14,7 @@ type Person = {
   note: string;
 };
 
-// Add or edit team members here. The first two are the named principals; the
-// last two are generic placeholders — swap in real names, roles, and notes (or
-// add more entries to the array) whenever you're ready.
+// Add or edit team members here — name, role, and a short note each.
 const family: Person[] = [
   {
     name: "Bill Barber",
@@ -25,18 +23,18 @@ const family: Person[] = [
   },
   {
     name: "John",
+    role: "Owner",
+    note: "Bill’s son and second-generation owner, carrying the business forward.",
+  },
+  {
+    name: "Kathy",
     role: "Office manager",
-    note: "Bill’s son and part of the second-generation leadership keeping the books — and the values — straight.",
+    note: "Runs the office and keeps the day-to-day moving so the crews can focus on the work.",
   },
   {
-    name: "Team member",
-    role: "Role",
-    note: "Add a short line about this team member — what they do and why they’re part of the family.",
-  },
-  {
-    name: "Team member",
-    role: "Role",
-    note: "Add a short line about this team member — what they do and why they’re part of the family.",
+    name: "Uwe",
+    role: "General manager",
+    note: "Oversees the crews and operations, keeping jobs on track across the GTA.",
   },
 ];
 

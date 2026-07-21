@@ -5,7 +5,7 @@ const items = [
   {
     eyebrow: "On the line since",
     figure: site.founded,
-    detail: "Over 50 years tracing and clearing Toronto's drains — second-generation, family-owned.",
+    detail: "Serving the GTA for over 45 years, tracing and clearing Toronto's drains — second-generation, family-owned.",
   },
   {
     eyebrow: "Family owned",

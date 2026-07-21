@@ -11,8 +11,6 @@ import { site } from "@/lib/site";
  * named after: "Bill the Drain Man."
  */
 export function AboutHero() {
-  const yearsServing = new Date().getFullYear() - site.founded;
-
   return (
     <Section tone="ink" contained={false} spacing="none" className="relative isolate overflow-hidden">
       {/* Heritage workshop — the tools of a lifetime in the trade */}
@@ -59,7 +57,7 @@ export function AboutHero() {
           </li>
           <li>
             <Badge tone="ink" className="ring-1 ring-white/15">
-              <MapPin className="size-4" aria-hidden /> Toronto &amp; the GTA, {yearsServing}+ years
+              <MapPin className="size-4" aria-hidden /> Serving the GTA for over 45 years
             </Badge>
           </li>
         </ul>
