@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Check, ShieldCheck } from "lucide-react";
 import { Section, SectionHeading } from "@/components/ui";
 import { cn } from "@/lib/utils";
+import { DrainLine } from "./DrainLine";
 
 type Tone = "white" | "water" | "ink" | "blue";
 
@@ -92,8 +93,8 @@ export function PlumberVsTechnician({
           // cards follow the section tone.
           const light = us || onDark;
           return (
+            <React.Fragment key={title}>
             <article
-              key={title}
               className={cn(
                 "grid items-stretch overflow-hidden rounded-2xl md:grid-cols-2",
                 us
@@ -186,6 +187,8 @@ export function PlumberVsTechnician({
                 </p>
               </div>
             </article>
+            {i === 0 && <DrainLine joint className="my-1" />}
+            </React.Fragment>
           );
         })}
       </div>

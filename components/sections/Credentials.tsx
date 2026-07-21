@@ -65,10 +65,10 @@ export function Credentials({ tone = "white" }: CredentialsProps) {
           <div
             key={title}
             className={cn(
-              "flex flex-col items-center rounded-2xl border p-7 text-center transition-[transform,box-shadow] duration-200 ease-[var(--ease-flow)] hover:-translate-y-1",
+              "flex flex-col items-center rounded-xl border p-7 text-center transition-[transform,box-shadow] duration-200 ease-[var(--ease-flow)] hover:-translate-y-1",
               i % 2 === 1 && "lg:mt-14",
               onDark
-                ? "border-white/12 bg-white/[0.04] hover:shadow-[var(--shadow-md)]"
+                ? "border-white/12 bg-white/[0.04] shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]"
                 : "border-water-line bg-white shadow-[var(--shadow-sm)] hover:shadow-[var(--shadow-md)]",
             )}
           >

@@ -30,7 +30,7 @@ export default function AboutPage() {
               title="From a plan to a name people trust"
               description="One trade, one family, two generations — and a line that runs straight through all of it."
             />
-            <figure className="mt-8 hidden overflow-hidden rounded-2xl shadow-[var(--shadow-sm)] lg:block">
+            <figure className="mt-8 overflow-hidden rounded-2xl shadow-[var(--shadow-md)] ring-1 ring-water-line">
               <Image
                 src="/images/about/pipe-wrenches.jpg"
                 alt="Two tradespeople running new pipe together on a job — the trade passed down a generation"

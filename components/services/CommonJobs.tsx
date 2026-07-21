@@ -77,7 +77,7 @@ export function CommonJobs() {
         <li key={title} className="flex">
           <Link
             href="/contact"
-            className="group flex w-full flex-col overflow-hidden rounded-2xl bg-white shadow-[var(--shadow-sm)] ring-1 ring-water-line transition-[transform,box-shadow] duration-200 ease-[var(--ease-flow)] hover:-translate-y-1 hover:shadow-[var(--shadow-md)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+            className="group flex w-full flex-col overflow-hidden rounded-xl bg-white shadow-[var(--shadow-sm)] ring-1 ring-water-line transition-[transform,box-shadow] duration-200 ease-[var(--ease-flow)] hover:-translate-y-1 hover:shadow-[var(--shadow-md)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
           >
             {/* Image cap */}
             <div className="relative aspect-[16/10] w-full overflow-hidden">
@@ -91,7 +91,7 @@ export function CommonJobs() {
             </div>
 
             {/* Body */}
-            <div className="flex flex-1 flex-col p-6">
+            <div className="flex flex-1 flex-col p-6 md:p-7">
               <div className="flex items-center gap-3">
                 <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
                   <Icon className="h-5 w-5" aria-hidden />

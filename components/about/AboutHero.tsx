@@ -51,12 +51,12 @@ export function AboutHero() {
             </Badge>
           </li>
           <li>
-            <Badge tone="ink" className="ring-1 ring-white/15">
+            <Badge tone="ink" className="bg-white/10 ring-1 ring-white/20">
               <BadgeCheck className="size-4" aria-hidden /> Now second generation
             </Badge>
           </li>
           <li>
-            <Badge tone="ink" className="ring-1 ring-white/15">
+            <Badge tone="ink" className="bg-white/10 ring-1 ring-white/20">
               <MapPin className="size-4" aria-hidden /> Serving the GTA for over 45 years
             </Badge>
           </li>

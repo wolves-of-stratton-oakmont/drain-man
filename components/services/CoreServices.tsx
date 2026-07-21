@@ -1,12 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Waves,
-  ShieldCheck,
-  Flame,
-  ArrowRight,
-  Phone,
-} from "lucide-react";
+import { ArrowRight, Phone } from "lucide-react";
 import { Badge, buttonClasses } from "@/components/ui";
 import { site } from "@/lib/site";
 
@@ -25,7 +19,6 @@ type CoreService = {
   body: string;
   items?: string[];
   note?: string;
-  icon: React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>;
   image: {
     src: string;
     alt: string;
@@ -57,7 +50,6 @@ const services: CoreService[] = [
       "Foundation drains",
     ],
     note: "We install, repair, and maintain all of the above — and more.",
-    icon: Waves,
     image: {
       src: "/images/services/floor-drain.jpg",
       alt: "A plumber's gloved hands fitting a stainless steel pipe connection under a fixture",
@@ -71,7 +63,6 @@ const services: CoreService[] = [
     title: "Flood prevention",
     lead: "Stop a city sewer backup before it reaches your floor.",
     body: "We install, repair, replace, and maintain backwater prevention systems — the valves that stop sewage and municipal backflow from forcing its way up the line and into your home during a heavy storm or a city main backup.",
-    icon: ShieldCheck,
     image: {
       src: "/images/services/flood-prevention.jpg",
       alt: "Floodwater rising around a home, held back by an emergency flood barrier",
@@ -92,7 +83,6 @@ const services: CoreService[] = [
       "Cloudy tap water",
     ],
     note: "Common symptoms we flush away.",
-    icon: Flame,
     image: {
       src: "/images/services/power-flush.jpg",
       alt: "A heating system's red circulation pump, pressure gauge, and steel pipework",
@@ -105,7 +95,7 @@ const services: CoreService[] = [
 export function CoreServices() {
   return (
     <div className="flex flex-col gap-20 md:gap-28">
-      {services.map(({ icon: Icon, ...s }, i) => {
+      {services.map((s, i) => {
         const imageFirst = i % 2 === 1; // alternate: row 2 leads with image
         return (
           <article
@@ -153,7 +143,7 @@ export function CoreServices() {
               ].join(" ")}
             >
               <span className="inline-flex items-center gap-2 font-mono text-eyebrow font-medium uppercase tracking-[0.18em] text-blue">
-                <Icon className="h-4 w-4" aria-hidden />
+                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-blue" />
                 {s.eyebrow}
               </span>
               <h3 className="text-h2 text-ink">{s.title}</h3>

@@ -16,7 +16,8 @@ export default function NotFound() {
   return (
     <Section tone="water" spacing="lg" containerWidth="narrow">
       <div className="flex flex-col items-center text-center">
-        <span className="font-mono text-eyebrow uppercase tracking-[0.18em] text-blue">
+        <span className="inline-flex items-center gap-2 font-mono text-eyebrow font-medium uppercase text-blue">
+          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-blue" />
           404 — line not found
         </span>
 

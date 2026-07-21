@@ -51,7 +51,7 @@ export function ServicesSnapshot() {
           <Link
             key={title}
             href={href}
-            className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-[var(--shadow-sm)] ring-1 ring-water-line transition-[transform,box-shadow] duration-200 ease-[var(--ease-flow)] hover:-translate-y-1 hover:shadow-[var(--shadow-md)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
+            className="group flex flex-col overflow-hidden rounded-xl bg-white shadow-[var(--shadow-sm)] ring-1 ring-water-line transition-[transform,box-shadow] duration-200 ease-[var(--ease-flow)] hover:-translate-y-1 hover:shadow-[var(--shadow-md)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
           >
             {/* Image cap */}
             <div className="relative aspect-[16/10] w-full overflow-hidden">

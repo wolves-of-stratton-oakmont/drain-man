@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { MapPin, Phone, Wrench } from "lucide-react";
-import { Section, Container, Badge } from "@/components/ui";
+import { Section, Container, Badge, buttonClasses } from "@/components/ui";
 import { BookingForm } from "@/components/booking/BookingForm";
 import { ContactRail } from "@/components/contact/ContactRail";
 import { ContactMap } from "@/components/contact/ContactMap";
@@ -50,11 +50,11 @@ export default function ContactPage() {
             <Badge tone="signal">
               <MapPin className="size-4" aria-hidden /> Toronto &amp; the GTA
             </Badge>
-            <Badge tone="ink" className="ring-1 ring-white/15">
+            <Badge tone="ink" className="bg-white/10 ring-1 ring-white/20">
               <Wrench className="size-4" aria-hidden /> Drain technicians, not
               just plumbers
             </Badge>
-            <Badge tone="ink" className="ring-1 ring-white/15">
+            <Badge tone="ink" className="bg-white/10 ring-1 ring-white/20">
               No deposits, rates up front
             </Badge>
           </ul>
@@ -85,7 +85,7 @@ export default function ContactPage() {
         {/* Prefer to call? — direct-contact info, same white section as the form */}
         <div className="mt-16 border-t border-water-line pt-12">
           <div className="text-center">
-            <h2 className="text-h3 font-display font-bold text-ink">
+            <h2 className="text-h3 text-ink">
               Prefer to call? Here&apos;s every way to reach us.
             </h2>
           </div>
@@ -94,7 +94,9 @@ export default function ContactPage() {
       </Section>
 
       {/* ── Enercare partner — shared red panel used everywhere we mention it ── */}
-      <EnercareBand variant="hero" />
+      <Section tone="water" spacing="md">
+        <EnercareBand variant="band" />
+      </Section>
 
       {/* ── Service area + map ─────────────────────────────────────────── */}
       <Section tone="white" spacing="lg">
@@ -122,10 +124,7 @@ export default function ContactPage() {
             </ul>
 
             <div className="mt-8 flex flex-wrap gap-3">
-              <a
-                href={site.phone.href}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-blue px-6 text-base font-display font-bold tracking-tight text-white shadow-[var(--shadow-blue)] transition-[transform,background-color] duration-200 ease-[var(--ease-flow)] hover:-translate-y-0.5 hover:bg-blue-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal"
-              >
+              <a href={site.phone.href} className={buttonClasses({ size: "md" })}>
                 <Phone className="size-5" aria-hidden />
                 <span className="font-mono">{site.phone.display}</span>
               </a>

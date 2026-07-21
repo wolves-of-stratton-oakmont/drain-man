@@ -12,7 +12,7 @@ export function HeritageQuote() {
         aria-hidden="true"
         className="mx-auto mb-6 block h-3 w-3 rounded-full bg-signal"
       />
-      <blockquote className="text-h2 font-display font-extrabold leading-[1.1] tracking-[-0.01em] text-white text-balance">
+      <blockquote className="text-h2 font-display font-extrabold text-white text-balance">
         “An honest, hard-working tradesman shouldn’t need your money up front. You
         pay when we’ve done the work we promised.”
       </blockquote>

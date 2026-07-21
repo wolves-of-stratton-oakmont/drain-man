@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Phone } from "lucide-react";
-import { Section, buttonClasses } from "@/components/ui";
+import { Section } from "@/components/ui";
 import { BookCta } from "@/components/sections/BookCta";
 import { FaqAccordion, type FaqItem } from "@/components/faq/FaqAccordion";
 import { site } from "@/lib/site";
-import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -117,22 +115,6 @@ export default function FaqPage() {
           </Link>
           .
         </p>
-
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Link href="/contact" className={buttonClasses({ size: "md" })}>
-            Book a service
-          </Link>
-          <a
-            href={site.phone.href}
-            className={cn(
-              buttonClasses({ variant: "secondary", size: "md" }),
-              "font-mono",
-            )}
-          >
-            <Phone className="h-4 w-4" aria-hidden="true" />
-            {site.phone.display}
-          </a>
-        </div>
       </Section>
 
       <BookCta />

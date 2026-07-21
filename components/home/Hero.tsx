@@ -17,8 +17,8 @@ import { site } from "@/lib/site";
 export function Hero() {
   return (
     <section className="bg-white pt-4 pb-4 sm:pt-5 sm:pb-5">
-      <div className="mx-auto w-[95%] max-w-[1840px]">
-        <div className="relative overflow-hidden rounded-xl border border-accent-line bg-white shadow-[var(--shadow-md)]">
+      <div className="mx-auto w-[95%] max-w-[1700px]">
+        <div className="relative overflow-hidden rounded-2xl border border-accent-line bg-white shadow-[var(--shadow-md)]">
           {/* Full-bleed image hero — sized so the whole panel (image + contact
               band) fits within a laptop viewport without scrolling. */}
           <div className="relative flex min-h-[clamp(560px,80svh,720px)] flex-col justify-center lg:min-h-[clamp(460px,calc(100svh-15rem),700px)]">
@@ -46,12 +46,12 @@ export function Hero() {
 
             {/* Copy — anchored to the left of the frame */}
             <div className="relative mr-auto w-full max-w-[44rem] px-7 py-14 sm:px-10 sm:py-16 lg:py-16 lg:pl-16 lg:pr-14 xl:pl-20">
-              <span className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 font-mono text-eyebrow font-medium uppercase tracking-[0.18em] text-white backdrop-blur-sm">
-                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-accent" />
+              <span className="inline-flex w-fit items-center gap-2 font-mono text-eyebrow font-medium uppercase tracking-[0.18em] text-signal">
+                <span aria-hidden="true" className="h-2 w-2 rounded-full bg-signal" />
                 Toronto drain specialists since {site.founded}
               </span>
 
-              <h1 className="mt-5 max-w-[24ch] text-[clamp(2.25rem,3.6vw,3.5rem)] font-display font-extrabold leading-[1.03] tracking-[-0.015em] text-white">
+              <h1 className="mt-5 max-w-[24ch] text-display-lg text-white">
                 When the drain backs up,{" "}
                 <span className="text-white underline decoration-accent decoration-[6px] underline-offset-[10px]">
                   we trace the source.
@@ -73,7 +73,11 @@ export function Hero() {
                 </Link>
                 <a
                   href={site.phone.href}
-                  className={buttonClasses({ variant: "secondary", size: "lg" })}
+                  className={buttonClasses({
+                    variant: "secondary",
+                    size: "lg",
+                    className: "border-white/25 bg-transparent text-white hover:border-signal hover:text-signal",
+                  })}
                 >
                   <Phone aria-hidden="true" className="h-5 w-5" />
                   <span className="font-mono tracking-tight">{site.phone.display}</span>

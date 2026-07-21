@@ -81,7 +81,7 @@ export default function ServicesPage() {
             <Badge tone="signal">
               <MapPin className="size-4" aria-hidden /> Toronto &amp; the GTA
             </Badge>
-            <Badge tone="alert">
+            <Badge tone="alert" className="bg-alert text-white">
               <AlertTriangle className="size-4" aria-hidden /> Backed up right now?
               Call us
             </Badge>

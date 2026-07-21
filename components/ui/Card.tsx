@@ -24,7 +24,7 @@ export function Card({
 }: CardProps) {
   return (
     <Comp
-      className={cn("rounded-2xl p-6 md:p-8", variants[variant], className)}
+      className={cn("rounded-xl p-6 md:p-8", variants[variant], className)}
       {...props}
     />
   );
