@@ -57,9 +57,13 @@ export async function POST(request: Request) {
   const payload = result.data;
 
   // 3. Send the lead as a transactional email via Mailjet (server-only config).
-  const apiKey = process.env.MAILJET_API_KEY;
-  const secretKey = process.env.MAILJET_SECRET_KEY;
-  const fromEmail = process.env.MAILJET_FROM_EMAIL;
+  // Trim defensively: credentials/addresses never contain meaningful whitespace,
+  // but copy-paste into a hosting dashboard (or `KEY = value` spacing in a .env)
+  // can leave a stray leading/trailing space that corrupts the Basic-auth header
+  // and yields an opaque 401. A whitespace-only value trims to "" → treated as unset.
+  const apiKey = process.env.MAILJET_API_KEY?.trim();
+  const secretKey = process.env.MAILJET_SECRET_KEY?.trim();
+  const fromEmail = process.env.MAILJET_FROM_EMAIL?.trim();
 
   // Not configured → never accept a lead we can't deliver. Log it (so it's
   // recoverable from the server logs) and ask the customer to call.
@@ -74,8 +78,8 @@ export async function POST(request: Request) {
     );
   }
 
-  const fromName = process.env.MAILJET_FROM_NAME || site.legalName;
-  const toEmail = process.env.CONTACT_TO_EMAIL || site.email;
+  const fromName = process.env.MAILJET_FROM_NAME?.trim() || site.legalName;
+  const toEmail = process.env.CONTACT_TO_EMAIL?.trim() || site.email;
   const source = "drainmaninc.com booking form";
   const submittedAt = new Date().toISOString();
 
@@ -108,17 +112,27 @@ export async function POST(request: Request) {
       signal: AbortSignal.timeout(10_000),
     });
 
-    // Mailjet returns HTTP 200 even when an individual message fails — inspect
-    // the per-message Status so we never report a failed send as success.
+    // Mailjet returns HTTP 200 even when an individual message fails — inspect the
+    // per-message Status so we never report a failed send as success. Account/auth
+    // failures (blocked account, bad key) instead arrive as a TOP-LEVEL
+    // {ErrorMessage, ErrorCode, ErrorIdentifier} object with a non-2xx status.
     const data = (await res.json().catch(() => null)) as {
       Messages?: Array<{ Status?: string; Errors?: unknown }>;
+      ErrorMessage?: string;
+      ErrorCode?: string;
+      ErrorIdentifier?: string;
     } | null;
     const status = data?.Messages?.[0]?.Status;
 
     if (!res.ok || status !== "success") {
+      // Surface Mailjet's real reason. The top-level ErrorMessage is where auth /
+      // account problems live (e.g. "Your account has been temporarily blocked",
+      // mj-0001) — logging only the per-message status hides those as "(unparseable)".
+      const detail = data?.ErrorMessage
+        ? `${data.ErrorMessage} [${data.ErrorCode ?? "?"}, id ${data.ErrorIdentifier ?? "?"}]`
+        : `message status: ${status ?? "(unparseable)"}`;
       console.error(
-        `[contact] Mailjet send failed. HTTP ${res.status}; message status:`,
-        status ?? "(unparseable)",
+        `[contact] Mailjet send failed. HTTP ${res.status}; ${detail}`,
         data?.Messages?.[0]?.Errors ?? "",
       );
       return fail(
